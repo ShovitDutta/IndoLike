@@ -31,7 +31,7 @@ export default function Player() {
   };
 
   const getSong = async () => {
-    const get = await fetch(`/api/songs/${values.music}`);
+    const get = await fetch(`/api/songs?id=${values.music}`);
     const data = await get.json();
     setData(data.data[0]);
     if (data?.data[0]?.downloadUrl[2]?.url) {

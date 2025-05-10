@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { NextResponse } from "next/server";
 const api_url = process.env.NEXT_PUBLIC_API_URL;
 if (!api_url) throw new Error("Missing NEXT_PUBLIC_API_URL environment variable");

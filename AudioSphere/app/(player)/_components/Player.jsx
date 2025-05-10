@@ -22,7 +22,7 @@ export default function Player({ id }) {
   const next = useContext(NextContext);
   const { current, setCurrent } = useMusic();
   const getSong = async () => {
-    const get = await fetch(`http://localhost:3000/api/songs/${id}`);
+    const get = await fetch(`http://localhost:3000/api/songs?id=${id}`);
     const data = await get.json();
     setData(data.data[0]);
     if (data?.data[0]?.downloadUrl[2]?.url) {

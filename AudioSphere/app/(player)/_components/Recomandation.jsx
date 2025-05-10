@@ -8,7 +8,7 @@ export default function Recomandation({ id }) {
   const [loading, setLoading] = useState(true);
   const next = useContext(NextContext);
   const getData = async () => {
-    await fetch(`http://localhost:3000/api/songs/${id}/suggestions`)
+    await fetch(`http://localhost:3000/api/songs/suggestions?id=${id}`)
       .then(res => res.json())
       .then(data => {
         if (data) {

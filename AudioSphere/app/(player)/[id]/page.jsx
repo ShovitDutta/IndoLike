@@ -1,7 +1,7 @@
 import Player from "../_components/Player";
 import Recomandation from "../_components/Recomandation";
 export const generateMetadata = async ({ params }) => {
-  const title = await fetch(`http://localhost:3000/api/songs/${params.id}`);
+  const title = await fetch(`http://localhost:3000/api/songs?id=${params.id}`);
   const data = await title.json();
   const song = data?.data[0];
   return {
