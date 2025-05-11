@@ -1,19 +1,11 @@
-import { Octokit } from "@octokit/rest";
 import fs from "fs";
 import path from "path";
-
-const owner = "Shovit Dutta";
-const repo = "IndoLike";
+import { Octokit } from "@octokit/rest";
 const branch = "main";
+const repo = "IndoLike";
+const owner = "Shovit Dutta";
 const token = "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";
-
-if (!token) {
-  console.error("GITHUB_TOKEN environment variable is not set.");
-  process.exit(1);
-}
-
 const octokit = new Octokit({ auth: token });
-
 async function getFileSha(filePath) {
   try {
     const { data } = await octokit.rest.repos.getContent({
@@ -27,19 +19,15 @@ async function getFileSha(filePath) {
     if (error.status === 404) {
       return undefined;
     }
-    console.error(`Error getting SHA for ${filePath}:`, error);
     throw error;
   }
 }
-
 async function uploadFile(filePath) {
   const content = fs.readFileSync(filePath);
   const base64Content = Buffer.from(content).toString("base64");
   const repoPath = path.relative(".", filePath).replace(/\\/g, "/");
-
   try {
     const sha = await getFileSha(repoPath);
-
     await octokit.rest.repos.createOrUpdateFileContents({
       owner,
       repo,
@@ -54,15 +42,12 @@ async function uploadFile(filePath) {
     console.error(`Error uploading ${repoPath}:`, error);
   }
 }
-
 async function uploadDirectory(dirPath) {
   const entries = fs.readdirSync(dirPath, { withFileTypes: true });
-
   for (const entry of entries) {
     const fullPath = path.join(dirPath, entry.name);
     if (entry.isFile()) {
-      if (fullPath === "index.mjs") {
-        console.log(`Skipping script file: ${fullPath}`);
+      if (path.resolve(fullPath) === path.resolve("index.mjs")) {
         continue;
       }
       await uploadFile(fullPath);
@@ -71,7 +56,6 @@ async function uploadDirectory(dirPath) {
     }
   }
 }
-
 uploadDirectory(".")
   .then(() => console.log("Upload process completed."))
-  .catch(error => console.error("Upload process failed:", error));
+  .catch((error) => console.error("Upload process failed:", error));
