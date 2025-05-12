@@ -5,8 +5,8 @@
     "start": "next start",
     "build": "next build",
     "dev": "next dev --turbopack",
-    "postinstall": "prisma generate",
-    "prestart": "prisma migrate deploy"
+    "prestart": "prisma migrate deploy",
+    "postinstall": "prisma migrate dev && prisma generate"
   },
   "dependencies": {
     "@google/genai": "^0.12.0",
