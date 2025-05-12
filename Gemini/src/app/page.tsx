@@ -2,6 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { signIn } from "next-auth/react";
 const models = [
   {
     id: "gemini-2.5-flash-preview-04-17",
@@ -66,6 +67,9 @@ export default function Home() {
         <Image src="/chatbot.gif" alt="Chatbot GIF" unoptimized width={128} height={128} className="mx-auto mb-6 border-double border-8 border-blue-500 rounded-full" />
         <h1 className="text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-blue-300">Select a Free Gemini Model</h1>
         <p className="text-xl text-gray-300 max-w-2xl mx-auto">Choose a model to start your chat session. Each model is optimized for different use cases.</p>
+        <button className="mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded shadow" onClick={() => signIn("google", { redirectTo: "/" })}>
+          Sign in with Google
+        </button>
       </motion.div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
         {models.map((model, index) => (
