@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 @layer base {
   :root {
     --background: 0 0% 0%;
@@ -31,7 +30,6 @@
     --chart-5: 27 87% 67%;
   }
 }
-
 @layer base {
   * {
     @apply border-border;
@@ -48,7 +46,6 @@
   .blurz {
     animation: blur 0.7s forwards;
   }
-
   @keyframes blur {
     0% {
       filter: blur(5px);
@@ -70,21 +67,17 @@
     }
   }
 }
-
 @layer utilities {
   .animate-fade-in {
     @apply motion-safe:animate-[fade-in_0.5s_ease-in-out];
   }
-
   .animate-slide-in {
     @apply motion-safe:animate-[slide-in_0.5s_ease-in-out];
   }
-
   .animate-scale {
     @apply motion-safe:animate-[scale_0.3s_ease-in-out];
   }
 }
-
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -93,7 +86,6 @@
     opacity: 1;
   }
 }
-
 @keyframes slide-in {
   from {
     transform: translateY(20px);
@@ -104,7 +96,6 @@
     opacity: 1;
   }
 }
-
 @keyframes scale {
   from {
     transform: scale(0.95);

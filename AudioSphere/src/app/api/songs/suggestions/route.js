@@ -1,12 +1,10 @@
 export const dynamic = "force-dynamic";
 import { NextResponse } from "next/server";
-const api_url = process.env.NEXT_PUBLIC_API_URL;
-if (!api_url) throw new Error("Missing NEXT_PUBLIC_API_URL environment variable");
 export async function GET(request) {
   try {
     const id = request.nextUrl.searchParams.get("id");
     if (!id) return NextResponse.json({ error: "Missing song ID query parameter" }, { status: 400 });
-    const response = await fetch(`${api_url}songs/${id}/suggestions`);
+    const response = await fetch(`https://jiosaavn-api.shovitdutta1.workers.dev/api/songs/${id}/suggestions`);
     if (!response.ok) {
       const errorText = await response.text();
       console.error(`External API error: ${response.status} - ${errorText}`);
