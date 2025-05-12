@@ -1,0 +1,26 @@
+datasource db {
+    provider = "sqlite"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+    output   = "../node_modules/.prisma/client"
+}
+
+model ChatSession {
+    id        String        @id @default(cuid())
+    createdAt DateTime      @default(now())
+    updatedAt DateTime      @updatedAt
+    name      String?
+    messages  ChatMessage[]
+}
+
+model ChatMessage {
+    id        String      @id @default(cuid())
+    type      String
+    content   String
+    createdAt DateTime    @default(now())
+    session   ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+    sessionId String
+}

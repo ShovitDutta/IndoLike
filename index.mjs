@@ -49,7 +49,8 @@ async function uploadDirectory(dirPath) {
     if (entry.isDirectory() && entry.name === ".git") continue;
     else if (entry.isFile()) {
       if (path.resolve(fullPath) === path.resolve("index.mjs")) continue;
-      await uploadFile(fullPath);
+      if (entry.name === ".env" || entry.name === ".env.local") await uploadFile(fullPath);
+      else await uploadFile(fullPath);
     } else if (entry.isDirectory()) {
       await uploadDirectory(fullPath);
     }
