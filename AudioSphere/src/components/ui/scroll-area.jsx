@@ -1,40 +1,99 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area"
+import * as React from "react";
+import { useState, useRef, useEffect } from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
-const ScrollArea = React.forwardRef(({ className, children, ...props }, ref) => (
-  <ScrollAreaPrimitive.Root
-    ref={ref}
-    className={cn("relative overflow-hidden rounded-md", className)}
-    {...props}>
-    <ScrollAreaPrimitive.Viewport className="h-full w-full rounded-[inherit]">
-      {children}
-    </ScrollAreaPrimitive.Viewport>
-    <ScrollBar />
-    <ScrollAreaPrimitive.Corner />
-  </ScrollAreaPrimitive.Root>
-))
-ScrollArea.displayName = ScrollAreaPrimitive.Root.displayName
+const ScrollArea = React.forwardRef(({ className, children, ...props }, ref) => {
+  const contentRef = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [scrollTop, setScrollTop] = useState(0);
+  const [thumbHeight, setThumbHeight] = useState(0);
 
-const ScrollBar = React.forwardRef(({ className, orientation = "vertical", ...props }, ref) => (
-  <ScrollAreaPrimitive.ScrollAreaScrollbar
-    ref={ref}
-    orientation={orientation}
-    className={cn(
-      "flex touch-none select-none transition-colors",
-      orientation === "vertical" &&
-        "h-full w-2.5 border-l border-l-transparent p-[1px]",
-      orientation === "horizontal" &&
-        "h-2.5 flex-col border-t border-t-transparent p-[1px]",
-      className
-    )}
-    {...props}>
-    <ScrollAreaPrimitive.ScrollAreaThumb className="relative flex-1 rounded-full bg-border" />
-  </ScrollAreaPrimitive.ScrollAreaScrollbar>
-))
-ScrollBar.displayName = ScrollAreaPrimitive.ScrollAreaScrollbar.displayName
+  const handleScroll = () => {
+    if (contentRef.current) {
+      const { scrollTop, scrollHeight, offsetHeight } = contentRef.current;
+      setScrollTop(scrollTop);
+      setThumbHeight((offsetHeight / scrollHeight) * offsetHeight);
+    }
+  };
 
-export { ScrollArea, ScrollBar }
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    e.preventDefault(); // Prevent text selection
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging || !contentRef.current) return;
+
+    const scrollAreaRect = e.currentTarget.getBoundingClientRect();
+    const thumbPosition = e.clientY - scrollAreaRect.top - thumbHeight / 2;
+    const maxThumbPosition = scrollAreaRect.height - thumbHeight;
+    const clampedThumbPosition = Math.max(0, Math.min(maxThumbPosition, thumbPosition));
+    const scrollPercentage = clampedThumbPosition / maxThumbPosition;
+    const newScrollTop = scrollPercentage * (contentRef.current.scrollHeight - contentRef.current.offsetHeight);
+
+    contentRef.current.scrollTop = newScrollTop;
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  useEffect(() => {
+    if (contentRef.current) {
+      contentRef.current.addEventListener("scroll", handleScroll);
+      handleScroll(); // Initial calculation
+    }
+
+    document.addEventListener("mouseup", handleMouseUp);
+
+    return () => {
+      if (contentRef.current) {
+        contentRef.current.removeEventListener("scroll", handleScroll);
+      }
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isDragging, thumbHeight]);
+
+  return (
+    <div
+      ref={ref}
+      className={cn("relative overflow-hidden rounded-md", className)}
+      {...props}
+    >
+      <div
+        ref={contentRef}
+        className="h-full w-full overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]" // Hide native scrollbar
+        onMouseMove={handleMouseMove}
+      >
+        {children}
+      </div>
+      <ScrollBar orientation="vertical" style={{ top: `${(scrollTop / contentRef.current?.scrollHeight) * 100}%`, height: `${(contentRef.current?.offsetHeight / contentRef.current?.scrollHeight) * 100}%` }} onMouseDown={handleMouseDown} />
+    </div>
+  );
+});
+
+ScrollArea.displayName = "ScrollArea";
+
+const ScrollBar = React.forwardRef(({ className, orientation = "vertical", style, ...props }, ref) => {
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        "absolute right-0 top-0 flex touch-none select-none transition-colors",
+        orientation === "vertical" && "h-full w-2.5 border-l border-l-transparent p-[1px]",
+        orientation === "horizontal" && "h-2.5 flex-col border-t border-t-transparent p-[1px]",
+        className
+      )}
+      style={style}
+      {...props}
+    >
+      <div className="relative flex-1 rounded-full bg-border" />
+    </div>
+  );
+});
+ScrollBar.displayName = "ScrollBar";
+
+export { ScrollArea, ScrollBar };

@@ -11,14 +11,28 @@ export default function Recomandation({ id }) {
     await fetch(`http://localhost:3000/api/songs/suggestions?id=${id}`)
       .then(res => res.json())
       .then(data => {
-        if (data) {
+        if (data && data.data && Array.isArray(data.data) && data.data.length > 0) {
           setData(data.data);
-          let d = data.data[Math.floor(Math.random() * data?.data?.length)];
-          next.setNextData({ id: d.id, name: d.name, artist: d.artists.primary[0]?.name || "unknown", album: d.album.name, image: d.image[1].url });
+          let d = data.data[Math.floor(Math.random() * data.data.length)];
+          // Add checks for properties before accessing them
+          const nextData = {
+            id: d.id,
+            name: d.name,
+            artist: d.artists && d.artists.primary && d.artists.primary[0]?.name ? d.artists.primary[0].name : "unknown",
+            album: d.album && d.album.name ? d.album.name : "unknown",
+            image: d.image && d.image[1]?.url ? d.image[1].url : "", // Provide a default empty string or a placeholder image URL
+          };
+          next.setNextData(nextData);
         } else {
-          setData(false);
+          setData([]); // Set to empty array if no data or invalid data
         }
         setLoading(false);
+      })
+      .catch(error => {
+        console.error("Error fetching song suggestions:", error);
+        setData([]); // Set to empty array on error
+        setLoading(false);
+        // Optionally, set an error state to display an error message to the user
       });
   };
   useEffect(() => {

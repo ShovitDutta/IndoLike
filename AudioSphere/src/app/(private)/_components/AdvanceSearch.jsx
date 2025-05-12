@@ -24,7 +24,6 @@ export default function AdvanceSearch() {
       if (result.data && result.data.results) {
         setData(result.data.results);
       } else {
-        console.warn("Unexpected data structure:", result);
         setData([]);
       }
     } catch (error) {

@@ -1,7 +1,4 @@
 {
-  "scripts": {
-    "postinstall": "cd Gemini && bun install --force && cd .. && cd AudioSphere && bun install --force"
-  },
   "dependencies": {
     "@octokit/rest": "^21.1.1",
     "dotenv": "^16.5.0"

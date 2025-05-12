@@ -1,5 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
 :root {
   --background: #202123;
   --foreground: #e0e0e0;
@@ -22,7 +22,7 @@ body {
   background: #2d2d30;
 }
 ::-webkit-scrollbar-thumb {
-  background: #3b82f6; /* Blue color */
+  background: #3b82f6;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -30,5 +30,5 @@ body {
 }
 * {
   scrollbar-width: thin;
-  scrollbar-color: #3b82f6 #2d2d30; /* Blue thumb, dark track */
+  scrollbar-color: #3b82f6 #2d2d30;
 }
