@@ -1,26 +1,20 @@
 "use client";
-
-import Link from "next/link";
 import { Skeleton } from "../ui/skeleton";
-import { useContext, useEffect, useState } from "react";
-import { MusicContext } from "@/hooks/use-context";
 import { Play, Pause } from "lucide-react";
+import { MusicContext } from "@/hooks/use-context";
+import { useContext, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
 export default function SongCard({ title, image, artist, id, desc }) {
   const ids = useContext(MusicContext);
   const [isHovered, setIsHovered] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-
   const setLastPlayed = () => {
     localStorage.clear();
     localStorage.setItem("last-played", id);
   };
-
   useEffect(() => {
     setIsPlaying(ids.music === id);
   }, [ids.music, id]);
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -60,7 +54,6 @@ export default function SongCard({ title, image, artist, id, desc }) {
             <Skeleton className="aspect-square w-full" />
           )}
         </div>
-
         <div className="p-4">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}>
             {title ? (
@@ -71,24 +64,19 @@ export default function SongCard({ title, image, artist, id, desc }) {
                   setLastPlayed();
                 }}
                 whileHover={{ x: 5 }}>
-                {title.slice(0, 25)}
-                {title.length > 25 && "..."}
+                {title.slice(0, 25)} {title.length > 25 && "..."}
               </motion.h2>
             ) : (
               <Skeleton className="w-[70%] h-4" />
             )}
-
             {desc && (
               <motion.p className="line-clamp-2 text-sm text-muted-foreground mt-1" initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-                {desc.slice(0, 60)}
-                {desc.length > 60 && "..."}
+                {desc.slice(0, 60)} {desc.length > 60 && "..."}
               </motion.p>
             )}
-
             {artist && (
               <motion.p className="mt-2 text-sm text-muted-foreground/80" initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-                {artist.slice(0, 25)}
-                {artist.length > 25 && "..."}
+                {artist.slice(0, 25)} {artist.length > 25 && "..."}
               </motion.p>
             )}
           </motion.div>

@@ -1,11 +1,10 @@
 "use client";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import SongCard from "@/components/cards/song";
 import AlbumCard from "@/components/cards/album";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { motion } from "framer-motion";
 import TrendingHero from "@/components/page/trending-hero";
-
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 export default function Page() {
   const [latest, setLatest] = useState([]);
   const [albums, setAlbums] = useState([]);
@@ -29,9 +28,8 @@ export default function Page() {
   return (
     <motion.main initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="container mx-auto px-0 py-10">
       <div className="space-y-12">
-        <TrendingHero /> {/* Add the TrendingHero component here */}
+        <TrendingHero />
         <div className="container mx-auto px-4 py-8">
-          {/* Add container back for other sections */}
           <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
             <div className="flex flex-col gap-1 mb-6">
               <motion.h1 className="text-2xl font-semibold tracking-tight" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
@@ -41,7 +39,6 @@ export default function Page() {
                 Discover the freshest beats and newest releases
               </motion.p>
             </div>
-
             <ScrollArea className="rounded-xl pb-4">
               <motion.div className="flex gap-4" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }}>
                 {latest.length
@@ -68,7 +65,6 @@ export default function Page() {
                 Explore complete collections from your favorite artists
               </motion.p>
             </div>
-
             <ScrollArea className="rounded-xl pb-4">
               <motion.div className="flex gap-4" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.9 }}>
                 {albums.length
@@ -95,7 +91,6 @@ export default function Page() {
                 Top trending tracks loved by millions
               </motion.p>
             </div>
-
             <ScrollArea className="rounded-xl pb-4">
               <motion.div className="flex gap-4" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 1.4 }}>
                 {popular.length

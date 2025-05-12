@@ -23,9 +23,7 @@ export default function AdvanceSearch() {
       const result = await response.json();
       if (result.data && result.data.results) {
         setData(result.data.results);
-      } else {
-        setData([]);
-      }
+      } else setData([]);
     } catch (error) {
       setData([]);
     } finally {
@@ -40,9 +38,7 @@ export default function AdvanceSearch() {
       return () => {
         clearTimeout(handler);
       };
-    } else {
-      setData([]);
-    }
+    } else setData([]);
   }, [query]);
   return (
     <div className="px-6 !-mb-3 md:px-20 lg:px-32">

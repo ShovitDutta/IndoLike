@@ -1,11 +1,10 @@
 "use client";
-import { useRef, useState } from "react";
 import Link from "next/link";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { SearchIcon, Loader2 } from "lucide-react";
+import { useRef, useState } from "react";
+import { SearchIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-
 export default function Search() {
   const [query, setQuery] = useState("");
   const linkRef = useRef();
@@ -24,12 +23,7 @@ export default function Search() {
     <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.2 }} className="w-full">
       <Link href={"/search/" + query} ref={linkRef}></Link>
       <form onSubmit={handleSubmit} className="relative w-full group">
-        <motion.div
-          initial={false}
-          animate={{
-            boxShadow: query ? "0 0 20px 2px rgba(var(--primary), 0.1)" : "none",
-          }}
-          className="relative rounded-2xl overflow-hidden backdrop-blur-sm">
+        <motion.div initial={false} animate={{ boxShadow: query ? "0 0 20px 2px rgba(var(--primary), 0.1)" : "none" }} className="relative rounded-2xl overflow-hidden backdrop-blur-sm">
           <Input
             ref={inpRef}
             value={query}
@@ -40,11 +34,9 @@ export default function Search() {
             name="query"
             placeholder="Search your favorite music..."
           />
-
           <motion.div className="absolute left-0 top-0 h-full flex items-center pl-4" initial={{ opacity: 0.5 }} animate={{ opacity: 1 }} transition={{ duration: 0.2 }}>
             <SearchIcon className="w-4 h-4 text-muted-foreground" />
           </motion.div>
-
           <AnimatePresence>
             {query && (
               <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }} className="absolute right-0 top-0 h-full flex items-center pr-4">

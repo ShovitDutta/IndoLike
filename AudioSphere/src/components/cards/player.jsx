@@ -1,35 +1,24 @@
 "use client";
-import { useContext, useEffect, useRef, useState } from "react";
-import { Button } from "../ui/button";
-import { ExternalLink, Link2Icon, Pause, PauseCircle, Play, Repeat, Repeat1, X, Volume2, Volume1, VolumeX } from "lucide-react";
-import { Slider } from "../ui/slider";
 import Link from "next/link";
-import { MusicContext } from "@/hooks/use-context";
-import { toast } from "sonner";
+import { Slider } from "../ui/slider";
 import { Skeleton } from "../ui/skeleton";
 import { IoPause } from "react-icons/io5";
 import { useMusic } from "../music-provider";
+import { MusicContext } from "@/hooks/use-context";
 import { motion, AnimatePresence } from "framer-motion";
-
+import { useContext, useEffect, useRef, useState } from "react";
+import { ExternalLink, Play, Repeat, Repeat1, X, Volume2, Volume1, VolumeX } from "lucide-react";
 export default function Player() {
-  const [data, setData] = useState([]);
-  const [playing, setPlaying] = useState(false);
   const audioRef = useRef(null);
-  const [currentTime, setCurrentTime] = useState(0);
+  const [data, setData] = useState([]);
+  const [volume, setVolume] = useState(1);
+  const values = useContext(MusicContext);
   const [duration, setDuration] = useState(0);
   const [audioURL, setAudioURL] = useState("");
+  const [playing, setPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
   const [isLooping, setIsLooping] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  const [volume, setVolume] = useState(1); // Add volume state
-  const values = useContext(MusicContext);
-
-  const controlVariants = {
-    initial: { scale: 0.8, opacity: 0 },
-    animate: { scale: 1, opacity: 1 },
-    tap: { scale: 0.95 },
-    hover: { scale: 1.05 },
-  };
-
+  const controlVariants = { initial: { scale: 0.8, opacity: 0 }, animate: { scale: 1, opacity: 1 }, tap: { scale: 0.95 }, hover: { scale: 1.05 } };
   const getSong = async () => {
     const get = await fetch(`/api/songs?id=${values.music}`);
     const data = await get.json();
@@ -42,13 +31,11 @@ export default function Player() {
       setAudioURL(data?.data[0]?.downloadUrl[0]?.url);
     }
   };
-
   const formatTime = time => {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
     return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
   };
-
   const togglePlayPause = () => {
     if (playing) {
       audioRef.current.pause();
@@ -57,20 +44,16 @@ export default function Player() {
     }
     setPlaying(!playing);
   };
-
   const handleSeek = e => {
     const seekTime = e[0];
     audioRef.current.currentTime = seekTime;
     setCurrentTime(seekTime);
   };
-
   const loopSong = () => {
     audioRef.current.loop = !audioRef.current.loop;
     setIsLooping(!isLooping);
   };
-
   const { current, setCurrent } = useMusic();
-
   const handleVolumeChange = value => {
     const newVolume = value[0];
     if (audioRef.current) {
@@ -78,7 +61,6 @@ export default function Player() {
       setVolume(newVolume);
     }
   };
-
   useEffect(() => {
     if (values.music) {
       getSong();
@@ -101,16 +83,15 @@ export default function Player() {
         }
       };
       audioRef.current.addEventListener("timeupdate", handleTimeUpdate);
-      audioRef.current.addEventListener("volumechange", handleVolumeChange); // Add volumechange listener
+      audioRef.current.addEventListener("volumechange", handleVolumeChange);
       return () => {
         if (audioRef.current) {
           audioRef.current.removeEventListener("timeupdate", handleTimeUpdate);
-          audioRef.current.removeEventListener("volumechange", handleVolumeChange); // Remove volumechange listener
+          audioRef.current.removeEventListener("volumechange", handleVolumeChange);
         }
       };
     }
   }, [values.music]);
-
   const getVolumeIcon = () => {
     if (volume === 0) {
       return <VolumeX className="h-4 w-4" />;
@@ -120,7 +101,6 @@ export default function Player() {
       return <Volume2 className="h-4 w-4" />;
     }
   };
-
   return (
     <main>
       <audio autoPlay={playing} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onLoadedData={() => setDuration(audioRef.current.duration)} src={audioURL} ref={audioRef} />
@@ -145,7 +125,6 @@ export default function Player() {
                 ) : (
                   <Skeleton className="h-16 w-16 rounded-xl" />
                 )}
-
                 <div className="flex-1 min-w-0">
                   {!data?.name ? (
                     <Skeleton className="h-5 w-32" />
@@ -157,7 +136,6 @@ export default function Player() {
                       </motion.div>
                     </Link>
                   )}
-
                   {!data?.artists?.primary[0]?.name ? (
                     <Skeleton className="h-4 w-24 mt-1.5" />
                   ) : (
@@ -165,15 +143,11 @@ export default function Player() {
                       {data?.artists?.primary[0]?.name}
                     </motion.p>
                   )}
-
                   <div className="flex items-center gap-2 mt-1.5 text-xs text-muted-foreground">
-                    <span>{formatTime(currentTime)}</span>
-                    <span>/</span>
-                    <span>{formatTime(duration)}</span>
+                    <span>{formatTime(currentTime)}</span> <span>/</span> <span>{formatTime(duration)}</span>
                   </div>
                 </div>
               </motion.div>
-
               <motion.div className="flex items-center gap-2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}>
                 {/* Volume Control */}
                 <div className="flex items-center gap-2">
@@ -182,8 +156,7 @@ export default function Player() {
                     whileHover="hover"
                     whileTap="tap"
                     className="p-2 rounded-xl hover:bg-primary/10 transition-colors"
-                    onClick={() => handleVolumeChange([volume === 0 ? 1 : 0])} // Toggle mute
-                  >
+                    onClick={() => handleVolumeChange([volume === 0 ? 1 : 0])}>
                     {getVolumeIcon()}
                   </motion.button>
                   <Slider
@@ -196,7 +169,6 @@ export default function Player() {
                     className="w-20 group"
                   />
                 </div>
-
                 <motion.button
                   variants={controlVariants}
                   whileHover="hover"
@@ -205,18 +177,15 @@ export default function Player() {
                   className={`p-2 rounded-xl ${!isLooping ? "hover:bg-primary/10" : "bg-primary/20"} transition-colors`}>
                   {!isLooping ? <Repeat className="h-4 w-4" /> : <Repeat1 className="h-4 w-4 text-primary" />}
                 </motion.button>
-
                 <motion.button
                   variants={controlVariants}
                   whileHover="hover"
                   whileTap="tap"
                   onClick={togglePlayPause}
                   className="p-3 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
-                  disabled={!values.music} // Disable play/pause if no music is loaded
-                >
+                  disabled={!values.music}>
                   {playing ? <IoPause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
                 </motion.button>
-
                 <motion.button
                   variants={controlVariants}
                   whileHover="hover"
@@ -226,17 +195,15 @@ export default function Player() {
                     setCurrent(0);
                     localStorage.clear();
                     if (audioRef.current) {
-                      // Add check before accessing audioRef.current
                       audioRef.current.currentTime = 0;
                       audioRef.current.src = null;
                     }
                     setAudioURL(null);
-                    setData([]); // Clear song data
-                    setPlaying(false); // Stop playing
+                    setData([]);
+                    setPlaying(false);
                   }}
                   className="p-2 rounded-xl hover:bg-primary/10 transition-colors"
-                  disabled={!values.music} // Disable close if no music is loaded
-                >
+                  disabled={!values.music}>
                   <X className="h-4 w-4" />
                 </motion.button>
               </motion.div>

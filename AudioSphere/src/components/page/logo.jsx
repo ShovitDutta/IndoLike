@@ -1,8 +1,6 @@
 "use client";
-
 import Link from "next/link";
 import { motion } from "framer-motion";
-
 export default function Logo() {
   return (
     <Link href="/" className="select-none">
@@ -15,15 +13,8 @@ export default function Logo() {
         </motion.h1>
         <motion.div
           className="absolute inset-0 blur-2xl bg-primary/20 rounded-full"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            repeatType: "reverse",
-          }}
+          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+          transition={{ duration: 4, repeat: Infinity, repeatType: "reverse" }}
         />
       </motion.div>
     </Link>

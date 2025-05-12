@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Badge } from "../ui/badge";
 import { Play } from "lucide-react";
-
 export default function Next({ name, artist, image, id, next = true }) {
   return (
     <Link href={`/${id}`}>

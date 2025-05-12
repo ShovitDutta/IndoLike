@@ -1,9 +1,7 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
-
 const baseClasses =
   "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50";
-
 const Button = React.forwardRef(({ className, variant = "default", size = "default", asChild = false, Icon, iconPlacement, children, ...props }, ref) => {
   const classes = cn(
     baseClasses,
@@ -30,7 +28,6 @@ const Button = React.forwardRef(({ className, variant = "default", size = "defau
     size === "icon" && "h-10 w-10",
     className,
   );
-
   const content = (
     <>
       {Icon && iconPlacement === "left" && (
@@ -46,25 +43,12 @@ const Button = React.forwardRef(({ className, variant = "default", size = "defau
       )}
     </>
   );
-
   if (asChild) {
-    // If asChild is true, we assume the child is the element to apply classes to.
-    // We need to clone the child and add the classes.
-    // This is a simplified version of Radix UI's Slot/Slottable.
     if (React.isValidElement(children)) {
-      return React.cloneElement(
-        children,
-        {
-          className: cn(classes, children.props.className),
-          ref,
-          ...props,
-        },
-        content,
-      );
+      return React.cloneElement(children, { className: cn(classes, children.props.className), ref, ...props }, content);
     }
-    return null; // Or handle error appropriately
+    return null;
   }
-
   return (
     <button className={classes} ref={ref} {...props}>
       {content}
@@ -72,5 +56,4 @@ const Button = React.forwardRef(({ className, variant = "default", size = "defau
   );
 });
 Button.displayName = "Button";
-
 export { Button };

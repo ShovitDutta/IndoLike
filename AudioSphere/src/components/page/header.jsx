@@ -1,12 +1,11 @@
 "use client";
 import Logo from "./logo";
-import { Button } from "../ui/button";
-import Search from "./search";
-import { ChevronLeft, Share2, MenuIcon } from "lucide-react";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
+import Search from "./search";
+import { Button } from "../ui/button";
 import { motion } from "framer-motion";
-
+import { usePathname } from "next/navigation";
+import { ChevronLeft, Share2, MenuIcon } from "lucide-react";
 export default function Header() {
   const path = usePathname();
   return (
@@ -23,18 +22,15 @@ export default function Header() {
               <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }}>
                 <Button variant="ghost" size="sm" className="hidden sm:flex items-center gap-2 hover:bg-primary/10" asChild>
                   <Link href="/">
-                    <ChevronLeft className="w-4 h-4" />
-                    <span>Back</span>
+                    <ChevronLeft className="w-4 h-4" /> <span>Back</span>
                   </Link>
                 </Button>
               </motion.div>
             )}
           </motion.div>
-
           <motion.div className="flex-1 max-w-xl px-4" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
             <Search />
           </motion.div>
-
           <motion.div className="flex items-center gap-2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}>
             <Button variant="ghost" size="icon" className="hidden sm:flex hover:bg-primary/10">
               <Share2 className="w-4 h-4" />

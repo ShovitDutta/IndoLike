@@ -1,10 +1,9 @@
 "use client";
 import Link from "next/link";
-import { Skeleton } from "../ui/skeleton";
 import { Badge } from "../ui/badge";
-import { motion } from "framer-motion";
 import { Play } from "lucide-react";
-
+import { motion } from "framer-motion";
+import { Skeleton } from "../ui/skeleton";
 export default function AlbumCard({ title, image, artist, id, desc, lang }) {
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} whileHover={{ y: -5 }} transition={{ duration: 0.3 }} className="group relative h-fit w-[280px] p-3">
@@ -25,7 +24,6 @@ export default function AlbumCard({ title, image, artist, id, desc, lang }) {
             <Skeleton className="aspect-square w-full" />
           )}
         </div>
-
         <div className="p-4">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}>
             {title ? (
@@ -35,9 +33,7 @@ export default function AlbumCard({ title, image, artist, id, desc, lang }) {
             ) : (
               <Skeleton className="w-[70%] h-4" />
             )}
-
             {desc && <p className="line-clamp-2 text-sm text-muted-foreground mt-1">{desc}</p>}
-
             {artist ? (
               <div className="mt-2 space-y-1">
                 <p className="text-sm text-muted-foreground">{artist}</p>

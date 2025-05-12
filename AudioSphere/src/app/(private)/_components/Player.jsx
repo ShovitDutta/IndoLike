@@ -25,13 +25,9 @@ export default function Player({ id }) {
     const get = await fetch(`http://localhost:3000/api/songs?id=${id}`);
     const data = await get.json();
     setData(data.data[0]);
-    if (data?.data[0]?.downloadUrl[2]?.url) {
-      setAudioURL(data?.data[0]?.downloadUrl[2]?.url);
-    } else if (data?.data[0]?.downloadUrl[1]?.url) {
-      setAudioURL(data?.data[0]?.downloadUrl[1]?.url);
-    } else {
-      setAudioURL(data?.data[0]?.downloadUrl[0]?.url);
-    }
+    if (data?.data[0]?.downloadUrl[2]?.url) setAudioURL(data?.data[0]?.downloadUrl[2]?.url);
+    else if (data?.data[0]?.downloadUrl[1]?.url) setAudioURL(data?.data[0]?.downloadUrl[1]?.url);
+    else setAudioURL(data?.data[0]?.downloadUrl[0]?.url);
   };
   const formatTime = time => {
     const minutes = Math.floor(time / 60);

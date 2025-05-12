@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export default function Footer() {
   return (
     <footer className="py-5 backdrop-blur-3xl mt-8 px-6 md:px-20 lg:px-32">
@@ -9,7 +7,7 @@ export default function Footer() {
         </h1>
       </div>
       <p className="text-sm text-muted-foreground">
-        Made with ♥ by{" "}
+        Made with ♥ by
         <a className="underline text-primary hover:text-primary" href="https://github.com/ShovitDutta">
           Shovit Dutta
         </a>
