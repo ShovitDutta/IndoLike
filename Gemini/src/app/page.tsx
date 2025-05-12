@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, Code, MessageSquare, Image as ImageIcon, FileText, Zap, Cpu, Menu, X, ChevronDown, FileCode, Search, User } from "lucide-react";
-
 const models = [
   {
     id: "gemini-2.5-flash-preview-04-17",
@@ -62,61 +61,31 @@ const models = [
     keyCapabilities: "System instructions, JSON mode, function calling",
   },
 ];
-
 const features = [
-  {
-    icon: <Code size={28} className="text-blue-400" />,
-    title: "Code Generation",
-    description: "Generate, debug, and optimize code across multiple programming languages.",
-  },
-  {
-    icon: <ImageIcon size={28} className="text-purple-400" />,
-    title: "Image Understanding",
-    description: "Analyze, describe, and extract information from images with high accuracy.",
-  },
-  {
-    icon: <FileCode size={28} className="text-pink-400" />,
-    title: "Function Calling",
-    description: "Integrate AI capabilities into your applications with structured data outputs.",
-  },
-  {
-    icon: <Search size={28} className="text-blue-400" />,
-    title: "Search Grounding",
-    description: "Get real-time information and data-backed responses from reliable sources.",
-  },
-  {
-    icon: <Cpu size={28} className="text-purple-400" />,
-    title: "Advanced Thinking",
-    description: "Solve complex problems with multi-step reasoning and analytical capabilities.",
-  },
-  {
-    icon: <FileText size={28} className="text-pink-400" />,
-    title: "Long Context Window",
-    description: "Process and understand extensive documents and conversations with high retention.",
-  },
+  { icon: <Code size={28} className="text-blue-400" />, title: "Code Generation", description: "Generate, debug, and optimize code across multiple programming languages." },
+  { icon: <ImageIcon size={28} className="text-purple-400" />, title: "Image Understanding", description: "Analyze, describe, and extract information from images with high accuracy." },
+  { icon: <FileCode size={28} className="text-pink-400" />, title: "Function Calling", description: "Integrate AI capabilities into your applications with structured data outputs." },
+  { icon: <Search size={28} className="text-blue-400" />, title: "Search Grounding", description: "Get real-time information and data-backed responses from reliable sources." },
+  { icon: <Cpu size={28} className="text-purple-400" />, title: "Advanced Thinking", description: "Solve complex problems with multi-step reasoning and analytical capabilities." },
+  { icon: <FileText size={28} className="text-pink-400" />, title: "Long Context Window", description: "Process and understand extensive documents and conversations with high retention." },
 ];
-
 export default function Home() {
   const { data: session } = useSession();
   const [showSignInModal, setShowSignInModal] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
   const openSignInModal = () => setShowSignInModal(true);
   const closeSignInModal = () => setShowSignInModal(false);
   const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
-
   const handleModelSelect = (modelId: string, modelName: string | number | boolean) => {
     if (session) window.location.href = `/chat?model=${modelId}&modelName=${encodeURIComponent(modelName)}`;
     else openSignInModal();
   };
-
   const scrollToModels = () => {
     const element = document.getElementById("model-selection");
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
-
   return (
     <div className="min-h-screen bg-black text-white">
       <div className="fixed inset-0 z-0">
@@ -124,14 +93,12 @@ export default function Home() {
         <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 bg-blue-600/10 rounded-full blur-3xl"></div>
         <div className="absolute bottom-1/4 right-1/4 w-1/2 h-1/2 bg-purple-600/10 rounded-full blur-3xl"></div>
       </div>
-
       <header className="z-80 border-b border-white/10 sticky top-0 backdrop-blur-sm">
         <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Image src="/chatbot.gif" alt="Gemini" unoptimized width={40} height={40} className="rounded-full border border-blue-500" />
             <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">Gemini</span>
           </div>
-
           <div className="hidden md:flex items-center gap-8">
             <a href="#" className="text-gray-300 hover:text-white transition">
               Features
@@ -143,7 +110,6 @@ export default function Home() {
               Pricing
             </a>
           </div>
-
           <div className="hidden md:flex items-center gap-4">
             {session ? (
               <div className="flex items-center gap-3">
@@ -152,17 +118,14 @@ export default function Home() {
               </div>
             ) : (
               <button onClick={openSignInModal} className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition flex items-center gap-2">
-                <User size={16} />
-                <span>Sign In</span>
+                <User size={16} /> <span>Sign In</span>
               </button>
             )}
           </div>
-
           <button className="md:hidden text-gray-300 hover:text-white" onClick={toggleMobileMenu}>
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </nav>
-
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="md:hidden border-t border-white/10">
@@ -176,11 +139,9 @@ export default function Home() {
                 <a href="#" className="py-2 text-gray-300 hover:text-white">
                   Pricing
                 </a>
-
                 {!session && (
                   <button onClick={openSignInModal} className="mt-2 w-full px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition flex items-center justify-center gap-2">
-                    <User size={16} />
-                    <span>Sign In</span>
+                    <User size={16} /> <span>Sign In</span>
                   </button>
                 )}
               </div>
@@ -188,7 +149,6 @@ export default function Home() {
           )}
         </AnimatePresence>
       </header>
-
       <section className="relative z-10 py-24">
         <div className="container mx-auto px-4">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="text-center max-w-4xl mx-auto mb-16">
@@ -198,21 +158,16 @@ export default function Home() {
                 <Image src="/chatbot.gif" alt="Gemini AI" unoptimized width={96} height={96} className="rounded-full object-cover" />
               </div>
             </div>
-
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
-              Experience the Power
-              <br />
-              of Gemini AI
+              Experience the Power <br /> of Gemini AI
             </motion.h1>
-
             <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
               Choose from our collection of state-of-the-art models optimized for different use cases. Start your journey with advanced AI capabilities today.
             </motion.p>
-
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -223,14 +178,12 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-
       <section id="model-selection" className="relative z-10 py-16 bg-black/40 backdrop-blur-sm">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Select a Free Gemini Model</h2>
             <p className="text-gray-300 max-w-2xl mx-auto">Each model is designed and optimized for specific use cases. Choose the one that best suits your needs.</p>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {models.map((model, index) => (
               <motion.div
@@ -251,40 +204,30 @@ export default function Home() {
                       {model.id.includes("2.5") ? <Cpu size={24} /> : model.id.includes("2.0") ? <Zap size={24} /> : <MessageSquare size={24} />}
                     </div>
                   </div>
-
                   <div className="bg-white/5 rounded-xl p-4 mb-5 border border-white/10">
                     <div className="text-gray-300 space-y-3 text-sm">
                       <div className="flex items-center gap-2">
-                        <FileText size={16} className="text-blue-400" />
-                        <span className="font-medium text-blue-400">Inputs:</span> {model.inputs}
+                        <FileText size={16} className="text-blue-400" /> <span className="font-medium text-blue-400">Inputs:</span> {model.inputs}
                       </div>
                       <div className="flex items-center gap-2">
-                        <MessageSquare size={16} className="text-blue-400" />
-                        <span className="font-medium text-blue-400">Output:</span> {model.output}
+                        <MessageSquare size={16} className="text-blue-400" /> <span className="font-medium text-blue-400">Output:</span> {model.output}
                       </div>
                       <div className="flex items-center gap-2">
-                        <Zap size={16} className="text-blue-400" />
-                        <span className="font-medium text-blue-400">Optimized for:</span> {model.optimizedFor}
+                        <Zap size={16} className="text-blue-400" /> <span className="font-medium text-blue-400">Optimized for:</span> {model.optimizedFor}
                       </div>
                     </div>
                   </div>
-
                   <div className="grid grid-cols-2 gap-3 text-xs mb-4">
                     <div className="bg-white/5 rounded-lg p-3 border border-white/10">
-                      <p className="font-medium text-blue-400 mb-1">Input Limit</p>
-                      <p className="text-gray-300">{model.inputTokenLimit}</p>
+                      <p className="font-medium text-blue-400 mb-1">Input Limit</p> <p className="text-gray-300">{model.inputTokenLimit}</p>
                     </div>
                     <div className="bg-white/5 rounded-lg p-3 border border-white/10">
-                      <p className="font-medium text-blue-400 mb-1">Output Limit</p>
-                      <p className="text-gray-300">{model.outputTokenLimit}</p>
+                      <p className="font-medium text-blue-400 mb-1">Output Limit</p> <p className="text-gray-300">{model.outputTokenLimit}</p>
                     </div>
                   </div>
-
                   <div className="p-3 bg-white/5 rounded-lg text-xs border border-white/10 mb-6">
-                    <p className="font-medium text-blue-400 mb-1">Key Capabilities:</p>
-                    <p className="text-gray-300">{model.keyCapabilities}</p>
+                    <p className="font-medium text-blue-400 mb-1">Key Capabilities:</p> <p className="text-gray-300">{model.keyCapabilities}</p>
                   </div>
-
                   <motion.button
                     className="mt-auto w-full py-3 rounded-xl font-semibold text-white relative overflow-hidden group"
                     whileHover={{ scale: 1.02 }}
@@ -302,14 +245,12 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       <section className="relative z-10 py-24">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Advanced Features</h2>
             <p className="text-gray-300 max-w-2xl mx-auto">Explore what Gemini can do for you with these powerful capabilities.</p>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => (
               <motion.div
@@ -319,31 +260,20 @@ export default function Home() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 className="p-6 rounded-2xl border border-white/10 bg-black/60 backdrop-blur-sm">
-                <div className="p-3 bg-blue-600/20 rounded-xl inline-block mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
+                <div className="p-3 bg-blue-600/20 rounded-xl inline-block mb-4">{feature.icon}</div> <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
                 <p className="text-gray-300">{feature.description}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
-
       <section className="relative z-10 py-16 bg-black/40 backdrop-blur-sm">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Experience Gemini?</h2>
             <p className="text-xl text-gray-300 mb-8">Start using our cutting-edge AI models today and transform the way you work.</p>
             <motion.button
-              variants={{
-                pulse: {
-                  scale: [1, 1.05, 1],
-                  transition: {
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  },
-                },
-              }}
+              variants={{ pulse: { scale: [1, 1.05, 1], transition: { duration: 2, repeat: Infinity, ease: "easeInOut" } } }}
               animate="pulse"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -354,18 +284,15 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       <footer className="relative z-10 py-12 border-t border-white/10">
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.8 }} viewport={{ once: true }} className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <Image src="/chatbot.gif" alt="Gemini" unoptimized width={32} height={32} className="rounded-full border border-blue-500" />
-                <span className="text-xl font-bold">Gemini</span>
+                <Image src="/chatbot.gif" alt="Gemini" unoptimized width={32} height={32} className="rounded-full border border-blue-500" /> <span className="text-xl font-bold">Gemini</span>
               </div>
               <p className="text-gray-400 mb-4">Experience the next generation of AI with Gemini's advanced models.</p>
             </div>
-
             <div>
               <h3 className="font-bold mb-4">Models</h3>
               <ul className="space-y-2">
@@ -391,7 +318,6 @@ export default function Home() {
                 </li>
               </ul>
             </div>
-
             <div>
               <h3 className="font-bold mb-4">Company</h3>
               <ul className="space-y-2">
@@ -418,7 +344,6 @@ export default function Home() {
               </ul>
             </div>
           </div>
-
           <div className="border-t border-white/10 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm mb-4 md:mb-0">© 2025 Gemini AI. All rights reserved.</p>
             <div className="flex gap-6">
@@ -435,12 +360,10 @@ export default function Home() {
           </div>
         </motion.div>
       </footer>
-
       <AnimatePresence>
         {showSignInModal && (
           <React.Fragment>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40" onClick={closeSignInModal} />
-
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -449,11 +372,9 @@ export default function Home() {
               <div className="relative rounded-2xl p-8 mx-4 bg-black/80 backdrop-blur-md border border-white/10">
                 <div className="absolute top-0 right-0 w-40 h-40 bg-blue-500/20 blur-3xl rounded-full -mr-20 -mt-20"></div>
                 <div className="absolute bottom-0 left-0 w-40 h-40 bg-purple-500/20 blur-3xl rounded-full -ml-20 -mb-20"></div>
-
                 <button onClick={closeSignInModal} className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors z-10">
                   <X size={24} />
                 </button>
-
                 <div className="text-center mb-8 relative z-10">
                   <div className="w-20 h-20 mx-auto mb-6 relative">
                     <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-600/30 to-purple-600/30 blur-xl"></div>
@@ -461,10 +382,8 @@ export default function Home() {
                       <Image src="/chatbot.gif" alt="Gemini AI" unoptimized width={80} height={80} className="rounded-full object-cover" />
                     </div>
                   </div>
-                  <h2 className="text-2xl font-bold text-white">Sign in to Gemini</h2>
-                  <p className="text-gray-400 mt-2">Continue with your Google account to access all features</p>
+                  <h2 className="text-2xl font-bold text-white">Sign in to Gemini</h2> <p className="text-gray-400 mt-2">Continue with your Google account to access all features</p>
                 </div>
-
                 <motion.button
                   className="w-full flex items-center justify-center px-4 py-3 rounded-xl mt-4 relative overflow-hidden group z-10"
                   whileHover={{ scale: 1.02 }}
@@ -480,7 +399,6 @@ export default function Home() {
                   </svg>
                   <span className="text-white font-medium relative z-10">Continue with Google</span>
                 </motion.button>
-
                 <div className="mt-6 pt-4 border-t border-white/10 relative z-10">
                   <p className="text-xs text-center text-gray-400">By continuing, you agree to Gemini's Terms of Service and Privacy Policy</p>
                 </div>
