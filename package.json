@@ -1,9 +1,9 @@
 {
+  "scripts": {
+    "postinstall": "cd Gemini && bun install --force && cd .. && cd AudioSphere && bun install --force"
+  },
   "dependencies": {
-    "@auth/core": "^0.39.1",
-    "@auth/prisma-adapter": "^2.9.1",
     "@octokit/rest": "^21.1.1",
-    "dotenv": "^16.5.0",
-    "next-auth": "^4.24.11"
+    "dotenv": "^16.5.0"
   }
 }
