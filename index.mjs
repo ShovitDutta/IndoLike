@@ -3,7 +3,7 @@ import path from "path";
 import { Octokit } from "@octokit/rest";
 const branch = "main";
 const repo = "IndoLike";
-const owner = "Shovit Dutta";
+const owner = "ShovitDutta";
 const token = "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";
 const octokit = new Octokit({ auth: token });
 async function getFileSha(filePath) {
@@ -46,10 +46,9 @@ async function uploadDirectory(dirPath) {
   const entries = fs.readdirSync(dirPath, { withFileTypes: true });
   for (const entry of entries) {
     const fullPath = path.join(dirPath, entry.name);
-    if (entry.isFile()) {
-      if (path.resolve(fullPath) === path.resolve("index.mjs")) {
-        continue;
-      }
+    if (entry.isDirectory() && entry.name === ".git") continue;
+    else if (entry.isFile()) {
+      if (path.resolve(fullPath) === path.resolve("index.mjs")) continue;
       await uploadFile(fullPath);
     } else if (entry.isDirectory()) {
       await uploadDirectory(fullPath);
@@ -58,4 +57,4 @@ async function uploadDirectory(dirPath) {
 }
 uploadDirectory(".")
   .then(() => console.log("Upload process completed."))
-  .catch((error) => console.error("Upload process failed:", error));
+  .catch(error => console.error("Upload process failed:", error));
