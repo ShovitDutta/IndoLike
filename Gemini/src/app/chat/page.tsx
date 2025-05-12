@@ -11,6 +11,7 @@ import ReactMarkdown from "react-markdown";
 import { motion, AnimatePresence } from "framer-motion";
 import Sidebar from "@/components/Sidebar";
 import { freeModels } from "@/lib/models";
+import { useSession } from "next-auth/react";
 
 interface ChatMessage {
   id: string;
@@ -38,6 +39,13 @@ interface CacheInfo {
 }
 
 function ChatContent() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  useEffect(() => {
+    if (status === "loading") return;
+    if (!session) router.replace("/api/auth/signin");
+  }, [session, status, router]);
+  if (status === "loading" || !session) return <div>Loading...</div>;
   const [userInput, setUserInput] = useState("");
   const [response, setResponse] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -56,7 +64,6 @@ function ChatContent() {
   const [uploadedFile, setUploadedFile] = useState<UploadedFile | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const searchParams = useSearchParams();
-  const router = useRouter();
   const selectedModelId = searchParams.get("model");
   const [currentModel, setCurrentModel] = useState(freeModels.find(model => model.id === selectedModelId) || freeModels[0]);
   const [caches, setCaches] = useState<CacheInfo[]>([]);
