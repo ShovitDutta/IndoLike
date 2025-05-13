@@ -11,4 +11,4 @@ export default function MusicProvider({ children }) {
   }, []);
   return <MusicContext.Provider value={{ music, setMusic, current, setCurrent }}>{children}</MusicContext.Provider>;
 }
-export const MusicContext = () => useContext(MusicContext);
+export const useMusic = () => useContext(MusicContext);

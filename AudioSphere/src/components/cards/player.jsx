@@ -3,8 +3,8 @@ import Link from "next/link";
 import { Slider } from "../ui/slider";
 import { Skeleton } from "../ui/skeleton";
 import { IoPause } from "react-icons/io5";
+import { useMusic } from "../music-provider";
 import { MusicContext } from "@/hooks/use-context";
-import { MusicContext } from "../providers/MusicProvider";
 import { motion, AnimatePresence } from "framer-motion";
 import { useContext, useEffect, useRef, useState } from "react";
 import { ExternalLink, Play, Repeat, Repeat1, X, Volume2, Volume1, VolumeX } from "lucide-react";
@@ -53,7 +53,7 @@ export default function Player() {
     audioRef.current.loop = !audioRef.current.loop;
     setIsLooping(!isLooping);
   };
-  const { current, setCurrent } = MusicContext();
+  const { current, setCurrent } = useMusic();
   const handleVolumeChange = value => {
     const newVolume = value[0];
     if (audioRef.current) {
