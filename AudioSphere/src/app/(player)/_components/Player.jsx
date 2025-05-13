@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { NextContext } from "@/hooks/use-context";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useMusic } from "@/components/music-provider";
 import { useContext, useEffect, useRef, useState } from "react";
+import { useMusic } from "@/components/providers/music-provider";
 import { Download, Play, Repeat, Loader2, Repeat1, Share2 } from "lucide-react";
 export default function Player({ id }) {
   const [data, setData] = useState([]);
