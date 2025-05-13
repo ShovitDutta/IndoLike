@@ -1,11 +1,11 @@
 import Footer from "@/components/page/footer";
 import Header from "@/components/page/header";
-import NextProvider from "@/components/next-provider";
+import AudioProvider from "@/components/AudioProvider";
 export default function RootLayout({ children }) {
   return (
     <main>
       <Header />
-      <NextProvider>{children}</NextProvider>
+      <AudioProvider>{children}</AudioProvider>
       <Footer />
     </main>
   );

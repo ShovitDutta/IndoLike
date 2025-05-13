@@ -5,9 +5,9 @@ import { IoPause } from "react-icons/io5";
 import Next from "@/components/cards/next";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
-import { NextContext } from "@/hooks/use-context";
+import { NextContext } from "@/hooks/AudioContext";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useMusic } from "@/components/music-provider";
+import { useMusic } from "@/components/DataProvider";
 import { useContext, useEffect, useRef, useState } from "react";
 import { Download, Play, Repeat, Loader2, Repeat1, Share2 } from "lucide-react";
 export default function Player({ id }) {

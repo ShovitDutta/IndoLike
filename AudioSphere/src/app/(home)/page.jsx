@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import SongCard from "@/components/cards/song";
 import AlbumCard from "@/components/cards/album";
-import TrendingHero from "@/components/page/trending-hero";
+import TrendingHero from "@/components/page/trending";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 export default function Page() {
   const [latest, setLatest] = useState([]);

@@ -9,7 +9,9 @@ export default function RootLayout({ children }) {
       <div className="px-6 sm:hidden mb-4">
         <Search />
       </div>
-      {children} <Footer /> <Player />
+      {children}
+      <Footer />
+      <Player />
     </main>
   );
 }

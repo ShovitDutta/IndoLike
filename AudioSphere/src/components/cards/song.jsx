@@ -1,11 +1,11 @@
 "use client";
+import { motion } from "framer-motion";
 import { Skeleton } from "../ui/skeleton";
 import { Play, Pause } from "lucide-react";
-import { MusicContext } from "@/hooks/use-context";
+import { DataContext } from "@/hooks/AudioContext";
 import { useContext, useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 export default function SongCard({ title, image, artist, id, desc }) {
-  const ids = useContext(MusicContext);
+  const ids = useContext(DataContext);
   const [isHovered, setIsHovered] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const setLastPlayed = () => {
