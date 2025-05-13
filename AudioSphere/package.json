@@ -3,9 +3,9 @@
   "name": "audiosphere",
   "version": "0.1.0",
   "scripts": {
-    "update:fix": "bun update --latest --force; bun add postcss@^8 autoprefixer@^10.0.1 @tailwindcss/postcss@^4.1.0",
-    "start": "next start -p 3000",
-    "dev": "next dev -p 3000",
+    "update:fix": "bun update --latest --force; bun add autoprefixer@^10.0.1 postcss@^8 tailwindcss@^3.3.0",
+    "dev": "next dev --turbopack",
+    "start": "next start",
     "build": "next build"
   },
   "dependencies": {
@@ -28,8 +28,8 @@
     "vaul": "^1.1.2"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.21",
-    "postcss": "^8.5.3",
-    "@tailwindcss/postcss": "^4.1.6"
+    "autoprefixer": "10.0.1",
+    "postcss": "8",
+    "tailwindcss": "3.3.0"
   }
 }
