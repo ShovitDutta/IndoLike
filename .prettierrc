@@ -1,0 +1,31 @@
+<<<<<<< HEAD
+{
+  "semi": true,
+  "tabWidth": 2,
+  "printWidth": 200,
+  "singleQuote": false,
+  "proseWrap": "always",
+  "trailingComma": "all",
+  "arrowParens": "avoid",
+  "bracketSpacing": true,
+  "jsxSingleQuote": false,
+  "bracketSameLine": true,
+  "embeddedLanguageFormatting": "auto",
+  "htmlWhitespaceSensitivity": "ignore"
+}
+=======
+{
+  "semi": true,
+  "tabWidth": 2,
+  "printWidth": 200,
+  "singleQuote": false,
+  "proseWrap": "always",
+  "trailingComma": "all",
+  "arrowParens": "avoid",
+  "bracketSpacing": true,
+  "jsxSingleQuote": false,
+  "bracketSameLine": true,
+  "embeddedLanguageFormatting": "auto",
+  "htmlWhitespaceSensitivity": "ignore"
+}
+>>>>>>> 8c930d8c52fe0e2eeb08f275e5a181aea5f59fce

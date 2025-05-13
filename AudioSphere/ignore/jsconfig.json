@@ -1,0 +1,17 @@
+<<<<<<< HEAD
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
+=======
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
+>>>>>>> 8c930d8c52fe0e2eeb08f275e5a181aea5f59fce
