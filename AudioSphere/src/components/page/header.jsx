@@ -1,6 +1,6 @@
 "use client";
-import Logo from "./logo";
 import Link from "next/link";
+import Logo from "./branding";
 import Search from "./search";
 import { Button } from "../ui/button";
 import { motion } from "framer-motion";
