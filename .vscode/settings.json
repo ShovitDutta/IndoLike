@@ -1,5 +1,5 @@
-<<<<<<< HEAD
 {
+  "zencoder.enableRepoIndexing": true,
   "files.exclude": {
     "**/ios": true,
     "**/.hg": true,
@@ -18,24 +18,3 @@
     "**/node_modules": true
   }
 }
-=======
-{
-  "files.exclude": {
-    "**/ios": true,
-    "**/.hg": true,
-    "**/out": false,
-    "**/venv": true,
-    "**/.svn": true,
-    "**/.git": true,
-    "**/.expo": true,
-    "**/.next": true,
-    "**/dist": false,
-    "**/.venv": true,
-    "**/build": false,
-    "**/android": true,
-    "**/Thumbs.db": true,
-    "**/.DS_Store": true,
-    "**/node_modules": true
-  }
-}
->>>>>>> 8c930d8c52fe0e2eeb08f275e5a181aea5f59fce

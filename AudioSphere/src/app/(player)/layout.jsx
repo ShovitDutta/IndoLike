@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import Search from "@/components/elements/search";
 import Logo from "@/components/elements/branding";
 import { ChevronLeft, Share2, MenuIcon } from "lucide-react";
-import NextProvider from "@/components/providers/next-provider";
+import PlayQueueProvider from "@/components/providers/play-queue-provider";
 export default function RootLayout({ children }) {
   return (
     <main>
@@ -48,7 +48,7 @@ export default function RootLayout({ children }) {
           </motion.header>
         );
       })()}
-      <NextProvider>{children}</NextProvider>
+      <PlayQueueProvider>{children}</PlayQueueProvider>
       <footer className="py-5 backdrop-blur-3xl mt-8 px-6 md:px-20 lg:px-32">
         <div>
           <h1 className="text-xl font-bold">

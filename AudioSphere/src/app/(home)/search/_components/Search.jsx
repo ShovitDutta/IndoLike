@@ -1,12 +1,176 @@
 "use client";
-import { useEffect, useState } from "react";
-import SongCard from "@/components/cards/song";
-import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { Play, PlayIcon } from "lucide-react";
+import { AudioPlayerContext } from "@/hooks/use-context";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Play, PlayIcon, Pause } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState, useContext } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Search as SearchIcon, Album, Mic2, Users } from "lucide-react";
+// Song Card Component
+function SongCard({ title, image, artist, id, desc }) {
+  const ids = useContext(AudioPlayerContext);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const setLastPlayed = () => {
+    localStorage.clear();
+    localStorage.setItem("last-played", id);
+  };
+  useEffect(() => {
+    setIsPlaying(ids.music === id);
+  }, [ids.music, id]);
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      className="group relative h-fit w-[280px] p-3"
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}>
+      <motion.div
+        className="relative overflow-hidden rounded-xl bg-card/40 backdrop-blur-sm transition-all duration-300 group-hover:bg-card/60"
+        whileHover={{ scale: 1.02 }}
+        transition={{ duration: 0.2 }}>
+        <div className="aspect-square overflow-hidden rounded-lg">
+          {image ? (
+            <div className="relative">
+              <motion.img src={image} alt={title} className="h-full w-full object-cover" animate={{ scale: isHovered ? 1.1 : 1 }} transition={{ duration: 0.3 }} />
+              <motion.div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60" initial={{ opacity: 0 }} animate={{ opacity: isHovered ? 1 : 0 }} transition={{ duration: 0.3 }} />
+              <motion.button
+                className="absolute inset-0 flex items-center justify-center"
+                onClick={() => {
+                  ids.setMusic(id);
+                  setLastPlayed();
+                }}
+                whileHover="hover">
+                <motion.div
+                  className={`rounded-full p-3 ${isPlaying ? "bg-primary" : "bg-primary/90"} shadow-xl`}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: isHovered ? 1 : 0, scale: isHovered ? 1 : 0.8 }}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ duration: 0.2 }}>
+                  {isPlaying ? <Pause className="h-6 w-6 text-primary-foreground" /> : <Play className="h-6 w-6 text-primary-foreground" />}
+                </motion.div>
+              </motion.button>
+            </div>
+          ) : (
+            <Skeleton className="aspect-square w-full" />
+          )}
+        </div>
+        <div className="p-4">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}>
+            {title ? (
+              <motion.h2
+                className="line-clamp-1 font-semibold tracking-tight hover:text-primary transition-colors cursor-pointer"
+                onClick={() => {
+                  ids.setMusic(id);
+                  setLastPlayed();
+                }}
+                whileHover={{ x: 5 }}>
+                {title.slice(0, 25)} {title.length > 25 && "..."}
+              </motion.h2>
+            ) : (
+              <Skeleton className="w-[70%] h-4" />
+            )}
+            {desc && (
+              <motion.p className="line-clamp-2 text-sm text-muted-foreground mt-1" initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+                {desc.slice(0, 60)} {desc.length > 60 && "..."}
+              </motion.p>
+            )}
+            {artist && (
+              <motion.p className="mt-2 text-sm text-muted-foreground/80" initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+                {artist.slice(0, 25)} {artist.length > 25 && "..."}
+              </motion.p>
+            )}
+          </motion.div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+// Album Card Component
+function AlbumCard({ title, image, artist, id, desc, lang }) {
+  return (
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} whileHover={{ y: -5 }} transition={{ duration: 0.3 }} className="group relative h-fit w-[280px] p-3">
+      <div className="relative overflow-hidden rounded-xl bg-card/40 backdrop-blur-sm transition-all duration-300 group-hover:bg-card/60">
+        <div className="aspect-square overflow-hidden rounded-lg">
+          {image ? (
+            <Link href={`/album/${id}`}>
+              <div className="relative">
+                <img src={image} alt={title} className="h-full w-full object-cover transition-all duration-300 group-hover:scale-105" />
+                <motion.div initial={{ opacity: 0 }} whileHover={{ opacity: 1 }} className="absolute inset-0 flex items-center justify-center bg-black/40 transition-opacity">
+                  <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="rounded-full bg-primary p-3">
+                    <Play className="h-6 w-6 fill-primary-foreground" />
+                  </motion.div>
+                </motion.div>
+              </div>
+            </Link>
+          ) : (
+            <Skeleton className="aspect-square w-full" />
+          )}
+        </div>
+        <div className="p-4">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}>
+            {title ? (
+              <Link href={`/album/${id}`}>
+                <h2 className="line-clamp-1 font-semibold tracking-tight hover:text-primary transition-colors">{title}</h2>
+              </Link>
+            ) : (
+              <Skeleton className="w-[70%] h-4" />
+            )}
+            {desc && <p className="line-clamp-2 text-sm text-muted-foreground mt-1">{desc}</p>}
+            {artist ? (
+              <div className="mt-2 space-y-1">
+                <p className="text-sm text-muted-foreground">{artist}</p>
+                {lang && (
+                  <Badge variant="outline" className="font-normal bg-primary/10 text-primary hover:bg-primary/20">
+                    {lang}
+                  </Badge>
+                )}
+              </div>
+            ) : (
+              <Skeleton className="w-20 h-3 mt-2" />
+            )}
+          </motion.div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+// Artist Card Component
+function ArtistCard({ image, name, id }) {
+  return (
+    <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} whileHover={{ scale: 1.05 }} className="group relative h-fit w-[280px] p-3">
+      <Link href={"/search/" + `${encodeURI(name.toLowerCase().split(" ").join("+"))}`}>
+        <div className="relative aspect-square w-full">
+          <div className="overflow-hidden rounded-2xl bg-card/40 backdrop-blur-sm">
+            <motion.div className="w-full h-full" whileHover={{ scale: 1.15 }} transition={{ duration: 0.4 }}>
+              <img src={image} alt={name} className="h-full w-full object-cover transition-all duration-300" />
+            </motion.div>
+          </div>
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            initial={{ opacity: 0 }}
+            whileHover={{ opacity: 1 }}>
+            <div className="absolute bottom-3 left-3">
+              <motion.div className="bg-primary/90 p-2 rounded-full" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+                <PlayIcon className="w-4 h-4 text-primary-foreground" />
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
+        <motion.div className="mt-3 text-center px-2" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
+          <h2 className="font-medium text-sm truncate group-hover:text-primary transition-colors">{name}</h2> <p className="text-xs text-muted-foreground mt-0.5">Artist</p>
+        </motion.div>
+      </Link>
+    </motion.div>
+  );
+}
+
 export default function Search({ params }) {
   const query = params.id;
   const [artists, setArtists] = useState([]);
@@ -157,10 +321,10 @@ export default function Search({ params }) {
                         "/search/" +
                         `${encodeURI(
                           artists
-                             .find(a => a.artists.primary[0]?.id === id)
-                             .artists?.primary[0]?.name.toLowerCase()
-                             .split(" ")
-                             .join("+"),
+                            .find(a => a.artists.primary[0]?.id === id)
+                            .artists?.primary[0]?.name.toLowerCase()
+                            .split(" ")
+                            .join("+"),
                         )}`
                       }>
                       <div className="relative aspect-square w-full">

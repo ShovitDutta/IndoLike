@@ -2,7 +2,7 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import NextTopLoader from "nextjs-toploader";
 import { Space_Grotesk } from "next/font/google";
-import MusicProvider from "@/components/providers/music-provider";
+import AudioPlayerProvider from "@/components/providers/audio-player-provider";
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"] });
 export const metadata = { title: "AudioSphere", description: "Open-Source music streamer.", icons: "/favi-icon.jpg", manifest: "/manifest.json" };
 export default function RootLayout({ children }) {
@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
               showAtBottom={false}
               shadow="0 0 10px hsl(var(--primary)),0 0 15px hsl(var(--primary))"
             />
-            <MusicProvider>{children}</MusicProvider>
+            <AudioPlayerProvider>{children}</AudioPlayerProvider>
             <Toaster
               position="top-center"
               visibleToasts={1}

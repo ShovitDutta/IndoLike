@@ -2,14 +2,37 @@
 import Link from "next/link";
 import { toast } from "sonner";
 import { IoPause } from "react-icons/io5";
-import Next from "@/components/cards/next";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
-import { NextContext } from "@/hooks/use-context";
+import { Badge } from "@/components/ui/badge";
+import { PlayQueueContext } from "@/hooks/use-context";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useContext, useEffect, useRef, useState } from "react";
-import { useMusic } from "@/components/providers/music-provider";
+import { useAudioPlayer } from "@/components/providers/audio-player-provider";
 import { Download, Play, Repeat, Loader2, Repeat1, Share2 } from "lucide-react";
+// Next Card Component
+function Next({ name, artist, image, id, next = true }) {
+  return (
+    <Link href={`/${id}`}>
+      <div className="flex items-center gap-3 bg-secondary p-2 rounded-md">
+        <img src={image} className="aspect-square w-10 rounded-md" />
+        <div className="overflow-hidden flex-1">
+          <h1 className="text-secondary-foreground text-base text-ellipsis whitespace-nowrap overflow-hidden sm:max-w-md max-w-[150px]">{name}</h1>
+          <p className="-mt-0.5 mb-1 text-xs text-muted-foreground overflow-hidden text-ellipsis whitespace-nowrap">
+            by <span className="text-secondary-foreground">{artist}</span>
+          </p>
+        </div>
+        {next && <Badge className="!font-normal">next</Badge>}
+        {!next && (
+          <Badge>
+            <Play size={16} className="w-3 px-0 h-4" />
+          </Badge>
+        )}
+      </div>
+    </Link>
+  );
+}
+
 export default function Player({ id }) {
   const [data, setData] = useState([]);
   const [playing, setPlaying] = useState(true);
@@ -19,8 +42,8 @@ export default function Player({ id }) {
   const [isDownloading, setIsDownloading] = useState(false);
   const [isLooping, setIsLooping] = useState(false);
   const [audioURL, setAudioURL] = useState("");
-  const next = useContext(NextContext);
-  const { current, setCurrent } = useMusic();
+  const next = useContext(PlayQueueContext);
+  const { current, setCurrent } = useAudioPlayer();
   const getSong = async () => {
     const get = await fetch(`http://localhost:3000/api/songs?id=${id}`);
     const data = await get.json();

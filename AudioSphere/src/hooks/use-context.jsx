@@ -1,4 +1,4 @@
 "use client";
 import { createContext } from "react";
-export const NextContext = createContext(null);
-export const MusicContext = createContext(null);
+export const PlayQueueContext = createContext(null);
+export const AudioPlayerContext = createContext(null);
