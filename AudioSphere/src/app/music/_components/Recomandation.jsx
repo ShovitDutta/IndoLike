@@ -1,6 +1,6 @@
 "use client";
 import Next from "@/components/cards/next";
-import { NextContext } from "@/hooks/AudioContext";
+import { NextContext } from "@/hooks/use-context";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useContext, useEffect, useState } from "react";
 export default function Recomandation({ id }) {

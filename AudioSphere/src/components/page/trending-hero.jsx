@@ -2,9 +2,9 @@
 import { HeartIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { useMusic } from "@/components/DataProvider";
+import { useMusic } from "@/components/music-provider";
 import { motion, AnimatePresence } from "framer-motion";
-export default function Trending() {
+export default function TrendingHero() {
   const [trendingSongs, setTrendingSongs] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const { setMusic } = useMusic();

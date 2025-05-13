@@ -1,18 +1,18 @@
 "use client";
 import Link from "next/link";
 import { Slider } from "../ui/slider";
-import { motion } from "framer-motion";
 import { Skeleton } from "../ui/skeleton";
 import { IoPause } from "react-icons/io5";
-import { useMusic } from "../DataProvider";
-import { DataContext } from "@/hooks/AudioContext";
+import { useMusic } from "../music-provider";
+import { MusicContext } from "@/hooks/use-context";
+import { motion, AnimatePresence } from "framer-motion";
 import { useContext, useEffect, useRef, useState } from "react";
 import { ExternalLink, Play, Repeat, Repeat1, X, Volume2, Volume1, VolumeX } from "lucide-react";
 export default function Player() {
   const audioRef = useRef(null);
   const [data, setData] = useState([]);
   const [volume, setVolume] = useState(1);
-  const values = useContext(DataContext);
+  const values = useContext(MusicContext);
   const [duration, setDuration] = useState(0);
   const [audioURL, setAudioURL] = useState("");
   const [playing, setPlaying] = useState(false);

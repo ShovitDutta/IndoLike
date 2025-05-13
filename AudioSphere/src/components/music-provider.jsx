@@ -1,7 +1,7 @@
 "use client";
-import { DataContext } from "@/hooks/AudioContext";
+import { MusicContext } from "@/hooks/use-context";
 import { useContext, useEffect, useState } from "react";
-export default function DataProvider({ children }) {
+export default function MusicProvider({ children }) {
   const [music, setMusic] = useState(null);
   const [current, setCurrent] = useState(null);
   useEffect(() => {
@@ -9,6 +9,6 @@ export default function DataProvider({ children }) {
       setMusic(localStorage.getItem("last-played"));
     }
   }, []);
-  return <DataContext.Provider value={{ music, setMusic, current, setCurrent }}>{children}</DataContext.Provider>;
+  return <MusicContext.Provider value={{ music, setMusic, current, setCurrent }}>{children}</MusicContext.Provider>;
 }
-export const useMusic = () => useContext(DataContext);
+export const useMusic = () => useContext(MusicContext);
