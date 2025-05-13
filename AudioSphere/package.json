@@ -3,33 +3,33 @@
   "name": "audiosphere",
   "version": "0.1.0",
   "scripts": {
+    "update:fix": "bun update --latest --force; bun add postcss@^8 autoprefixer@^10.0.1 @tailwindcss/postcss@^4.1.0",
     "start": "next start -p 3000",
     "dev": "next dev -p 3000",
-    "build": "next build",
-    "lint": "next lint"
+    "build": "next build"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "cmdk": "1.0.0",
-    "framer-motion": "^12.10.5",
-    "lucide-react": "^0.508.0",
-    "next": "^14.2.6",
-    "next-pwa": "^2.0.2",
-    "nextjs-toploader": "^1.6.4",
-    "react": "^18",
-    "react-dom": "^18",
-    "react-hot-toast": "^2.4.1",
-    "react-icons": "^5.3.0",
-    "react-resizable-panels": "^1.0.9",
-    "sonner": "^1.5.0",
-    "tailwind-merge": "^3.2.0",
+    "cmdk": "1.1.1",
+    "framer-motion": "^12.11.0",
+    "lucide-react": "^0.510.0",
+    "next": "^15.3.2",
+    "next-pwa": "^5.6.0",
+    "nextjs-toploader": "^3.8.16",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-hot-toast": "^2.5.2",
+    "react-icons": "^5.5.0",
+    "react-resizable-panels": "^3.0.2",
+    "sonner": "^2.0.3",
+    "tailwind-merge": "^3.3.0",
     "tailwindcss-animate": "^1.0.7",
-    "vaul": "^0.9.1"
+    "vaul": "^1.1.2"
   },
   "devDependencies": {
-    "autoprefixer": "^10.0.1",
-    "postcss": "^8",
-    "tailwindcss": "^3.3.0"
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3",
+    "@tailwindcss/postcss": "^4.1.6"
   }
 }
