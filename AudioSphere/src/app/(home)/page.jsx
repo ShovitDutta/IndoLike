@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { HeartIcon } from "lucide-react";
 import { useEffect, useState } from "react";

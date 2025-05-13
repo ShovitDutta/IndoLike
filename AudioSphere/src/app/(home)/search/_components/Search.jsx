@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import SongCard from "@/components/cards/song";
 import { Skeleton } from "@/components/ui/skeleton";
