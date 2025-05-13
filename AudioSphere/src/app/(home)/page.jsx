@@ -5,9 +5,11 @@ import { useEffect, useState } from "react";
 import SongCard from "@/components/cards/song";
 import { Button } from "@/components/ui/button";
 import { AnimatePresence } from "framer-motion";
-import AlbumCard from "@/components/cards/album";
 import { useMusic } from "@/components/providers/music-provider";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { Badge } from "@/components/ui/badge";
+import { Play } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Page() {
   const [latest, setLatest] = useState([]);
@@ -146,12 +148,67 @@ export default function Page() {
                 {albums.length
                   ? albums.slice().map((album, index) => (
                       <motion.div key={album.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * index }}>
-                        <AlbumCard lang={album.language} image={album.image[2].url} album={album.album} title={album.name} artist={album.artists.primary[0].name} id={`album/${album.id}`} />
+                        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} whileHover={{ y: -5 }} transition={{ duration: 0.3 }} className="group relative h-fit w-[280px] p-3">
+                          <div className="relative overflow-hidden rounded-xl bg-card/40 backdrop-blur-sm transition-all duration-300 group-hover:bg-card/60">
+                            <div className="aspect-square overflow-hidden rounded-lg">
+                              {album.image[2].url ? (
+                                <Link href={`/album/${album.id}`}>
+                                  <div className="relative">
+                                    <img src={album.image[2].url} alt={album.name} className="h-full w-full object-cover transition-all duration-300 group-hover:scale-105" />
+                                    <motion.div initial={{ opacity: 0 }} whileHover={{ opacity: 1 }} className="absolute inset-0 flex items-center justify-center bg-black/40 transition-opacity">
+                                      <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="rounded-full bg-primary p-3">
+                                        <Play className="h-6 w-6 fill-primary-foreground" />
+                                      </motion.div>
+                                    </motion.div>
+                                  </div>
+                                </Link>
+                              ) : (
+                                <Skeleton className="aspect-square w-full" />
+                              )}
+                            </div>
+                            <div className="p-4">
+                              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}>
+                                {album.name ? (
+                                  <Link href={`/album/${album.id}`}>
+                                    <h2 className="line-clamp-1 font-semibold tracking-tight hover:text-primary transition-colors">{album.name}</h2>
+                                  </Link>
+                                ) : (
+                                  <Skeleton className="w-[70%] h-4" />
+                                )}
+                                {album.description && <p className="line-clamp-2 text-sm text-muted-foreground mt-1">{album.description}</p>}
+                                {album.artists.primary[0]?.name ? (
+                                  <div className="mt-2 space-y-1">
+                                    <p className="text-sm text-muted-foreground">{album.artists.primary[0]?.name}</p>
+                                    {album.language && (
+                                      <Badge variant="outline" className="font-normal bg-primary/10 text-primary hover:bg-primary/20">
+                                        {album.language}
+                                      </Badge>
+                                    )}
+                                  </div>
+                                ) : (
+                                  <Skeleton className="w-20 h-3 mt-2" />
+                                )}
+                              </motion.div>
+                            </div>
+                          </div>
+                        </motion.div>
                       </motion.div>
                     ))
                   : Array.from({ length: 10 }).map((_, i) => (
                       <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * i }}>
-                        <AlbumCard />
+                        <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * i }} whileHover={{ y: -5 }}>
+                          <div className="relative overflow-hidden rounded-xl bg-card/40 backdrop-blur-sm transition-all duration-300 group-hover:bg-card/60">
+                            <div className="aspect-square overflow-hidden rounded-lg">
+                              <Skeleton className="aspect-square w-full" />
+                            </div>
+                            <div className="p-4">
+                              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}>
+                                <Skeleton className="w-[70%] h-4" />
+                                <Skeleton className="w-20 h-3 mt-2" />
+                              </motion.div>
+                            </div>
+                          </div>
+                        </motion.div>
                       </motion.div>
                     ))}
               </motion.div>
