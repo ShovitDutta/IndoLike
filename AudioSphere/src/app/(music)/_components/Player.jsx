@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { NextContext } from "@/hooks/use-context";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useMusic } from "@/components/providers/music-provider";
+import { MusicContext } from "@/components/providers/MusicProvider";
 import { useContext, useEffect, useRef, useState } from "react";
 import { Download, Play, Repeat, Loader2, Repeat1, Share2 } from "lucide-react";
 export default function Player({ id }) {
@@ -20,7 +20,7 @@ export default function Player({ id }) {
   const [isLooping, setIsLooping] = useState(false);
   const [audioURL, setAudioURL] = useState("");
   const next = useContext(NextContext);
-  const { current, setCurrent } = useMusic();
+  const { current, setCurrent } = MusicContext();
   const getSong = async () => {
     const get = await fetch(`http://localhost:3000/api/songs?id=${id}`);
     const data = await get.json();
