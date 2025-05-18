@@ -1,0 +1,32 @@
+@import "tailwindcss";
+@plugin "daisyui";
+html,
+body {
+  height: 100%;
+  overflow-x: hidden;
+  background-color: #0a0b10;
+  overscroll-behavior: contain;
+}
+/* Works on Chromium and WebKit (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0b10; /* Match your dark background */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #ff821b; /* Tailwind's orange-400 */
+  border-radius: 6px;
+  border: 2px solid #0a0b10; /* Space around thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #ff821b; /* Tailwind's orange-500 */
+}
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #ff821b #0a0b10;
+}
