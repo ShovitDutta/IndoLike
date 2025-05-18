@@ -3,8 +3,8 @@ import { Toaster } from "sonner";
 import NextTopLoader from "nextjs-toploader";
 import { Space_Grotesk } from "next/font/google";
 import MusicProvider from "@/components/providers/music-provider";
+export const metadata = { title: "AudioSphere", description: "Open-Source music streamer." };
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"] });
-export const metadata = { title: "AudioSphere", description: "Open-Source music streamer.", icons: "/favi-icon.jpg", manifest: "/manifest.json" };
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark">
