@@ -26,4 +26,4 @@ EXPOSE 3001
 EXPOSE 3002
 EXPOSE 3003
 CMD ["concurrently", "http-server . -p 3000", "http-server ./AudioSphere/dist -p 3001", "http-server ./GeminiChat/dist -p 3002", "http-server ./QuoteGen/dist -p 3003"]
-concurrently http-server . -p 3000 http-server ./AudioSphere/dist -p 3001 http-server ./GeminiChat/dist -p 3002 http-server ./QuoteGen/dist -p 3003
+CMD ["concurrently", "yarn --cwd AudioSphere start -p 3000", "yarn --cwd GeminiChat start -p 3001", "yarn --cwd QuoteGen start -p 3002"]
