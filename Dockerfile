@@ -1,7 +1,7 @@
 FROM node:lts as builder
 WORKDIR /app
 COPY . .
-RUN npm i -g yarn concurrently http-server forever
+RUN npm install --global --force yarn concurrently http-server forever
 ENV DATABASE_URL="file:./local.db"
 RUN yarn install
 RUN yarn run together:build
