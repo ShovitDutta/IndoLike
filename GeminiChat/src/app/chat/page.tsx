@@ -34,8 +34,8 @@ interface CacheInfo {
   expireTime: string;
 }
 function ChatContent() {
-  const { data: session, status } = useSession();
   const router = useRouter();
+  const { data: session, status } = useSession();
   const [userInput, setUserInput] = useState("");
   const [response, setResponse] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);

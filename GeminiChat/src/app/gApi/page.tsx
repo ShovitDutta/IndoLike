@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Key, ExternalLink, Eye, EyeOff, CheckCircle, AlertCircle, ArrowLeft } from "lucide-react";
 export default function GApi() {
   const [error, setError] = useState("");
-  const [apiKey, setApiKey] = useState("");
+  const [geminiApiKey, setApiKey] = useState("");
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showApiKey, setShowApiKey] = useState(false);
@@ -15,13 +15,13 @@ export default function GApi() {
     event.preventDefault();
     setIsLoading(true);
     setError("");
-    if (!apiKey) {
+    if (!geminiApiKey) {
       setError("Please enter your API key.");
       setIsLoading(false);
       return;
     }
     try {
-      const response = await fetch("/api/user/settings", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ apiKey }) });
+      const response = await fetch("/api/settings", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ geminiApiKey }) });
       if (response.ok) {
         setSuccess(true);
         setTimeout(() => {
@@ -94,16 +94,16 @@ export default function GApi() {
               {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2" htmlFor="apiKey">
+                  <label className="block text-sm font-medium text-gray-300 mb-2" htmlFor="geminiApiKey">
                     API Key
                   </label>
                   <div className="relative">
                     <input
                       className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-blue-500/50 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all pr-12"
-                      id="apiKey"
+                      id="geminiApiKey"
                       type={showApiKey ? "text" : "password"}
                       placeholder="Enter your API key"
-                      value={apiKey}
+                      value={geminiApiKey}
                       onChange={e => {
                         setApiKey(e.target.value);
                         setError("");
@@ -163,7 +163,7 @@ export default function GApi() {
                   </span>
                 </motion.button>
                 {/* Clear Button */}
-                {apiKey && (
+                {geminiApiKey && (
                   <button
                     type="button"
                     onClick={() => {
