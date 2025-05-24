@@ -1,5 +1,4 @@
 {
-  "zencoder.enableRepoIndexing": true,
   "files.exclude": {
     "**/ios": true,
     "**/.hg": true,
@@ -13,8 +12,12 @@
     "**/.venv": true,
     "**/build": false,
     "**/android": true,
-    "**/Thumbs.db": true,
+    "**/bun.lock": true,
     "**/.DS_Store": true,
-    "**/node_modules": true
+    "**/Thumbs.db": true,
+    "**/yarn.lock": true,
+    "**/pnpm.lock": true,
+    "**/node_modules": true,
+    "**/package-json.lock": true
   }
 }
