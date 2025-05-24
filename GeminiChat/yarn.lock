@@ -60,10 +60,10 @@
   dependencies:
     tslib "^2.4.0"
 
-"@google/genai@^0.12.0":
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/@google/genai/-/genai-0.12.0.tgz#60cfa419f6e75fc1d47619e74f403e35a871b1a4"
-  integrity sha512-SJtCHac+HPgmwELpJpPKbaV4rk397bS2D42XgFR2NBEARDKd/79RcaRUFFd55pYUJ+gfaz9Bv6KYoiz/P6eZKA==
+"@google/genai@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@google/genai/-/genai-1.0.1.tgz#ccef337f733f27fdc2e5bf741af51889e2847082"
+  integrity sha512-qf8sq9vpuKUeBKukAn43z2eC1I/Jw63b9wo6O+1x3EIroF3oDouJOtW1AzwvfO+9gzCPfLjuCUONhMKiBC8vkQ==
   dependencies:
     google-auth-library "^9.14.2"
     ws "^8.18.0"
@@ -1119,10 +1119,10 @@ lowlight@^3.0.0:
     devlop "^1.0.0"
     highlight.js "~11.11.0"
 
-lucide-react@^0.509.0:
-  version "0.509.0"
-  resolved "https://registry.yarnpkg.com/lucide-react/-/lucide-react-0.509.0.tgz#faf65740f603708fd09d21fabf88950d362dbf8c"
-  integrity sha512-xCJHn6Uh5qF6PGml25vveCTrHJZcqS1G1MVzWZK54ZQsOiCVJk4fwY3oyo5EXS2S+aqvTpWYIfJN+PesJ0quxg==
+lucide-react@^0.511.0:
+  version "0.511.0"
+  resolved "https://registry.yarnpkg.com/lucide-react/-/lucide-react-0.511.0.tgz#1dfef3065c725ac83f5fe0a6f02d1e0b0c36e641"
+  integrity sha512-VK5a2ydJ7xm8GvBeKLS9mu1pVK6ucef9780JVUjw6bAjJL/QXnd4Y0p7SPeOUMC27YhzNCZvm5d/QX0Tp3rc0w==
 
 magic-string@^0.30.17:
   version "0.30.17"
