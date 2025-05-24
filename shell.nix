@@ -1,7 +1,6 @@
 { pkgs ? import <nixpkgs> {} }:
-
 let
-  nodejs = pkgs.nodejs_20; # Use Node.js version 20
+  nodejs = pkgs.nodejs_20;
 in
 pkgs.mkShell {
   buildInputs = [
@@ -10,8 +9,5 @@ pkgs.mkShell {
     pkgs.nodePackages.concurrently
     pkgs.nodePackages.http-server
   ];
-
-  shellHook = ''
-    echo "Entering development shell with Node.js ${nodejs.version}, Yarn, concurrently, and http-server"
-  '';
+  shellHook = ''echo "Entering development shell with Node.js ${nodejs.version}, Yarn, concurrently, and http-server"'';
 }
