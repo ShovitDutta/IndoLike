@@ -16,4 +16,4 @@ EXPOSE 3000
 EXPOSE 3001
 EXPOSE 3002
 EXPOSE 3003
-CMD ["forever", "start", "yarn", "run", "together:start"]
+CMD ["yarn", "run", "together:start"]
