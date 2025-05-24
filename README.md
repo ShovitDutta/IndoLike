@@ -1,4 +1,6 @@
-# Project Workflows
+# Projects Created For IndoLike Internship
+
+These projects were created as part of the IndoLike Internship. You can view them live at: shovitdutta.github.io/IndoLike/
 
 This document outlines the workflows of the three projects in this repository: AudioSphere, GeminiChat, and QuoteGen.
 
