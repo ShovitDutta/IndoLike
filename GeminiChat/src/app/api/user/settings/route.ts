@@ -10,15 +10,15 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { geminiApiKey } = await request.json();
+    const { apiKey } = await request.json();
 
-    if (!geminiApiKey) {
+    if (!apiKey) {
       return NextResponse.json({ error: "API key is required" }, { status: 400 });
     }
 
     await prisma.user.update({
       where: { id: session.user.id },
-      data: { geminiApiKey: geminiApiKey },
+      data: { geminiApiKey: apiKey },
     });
 
     return NextResponse.json({ message: "API key saved successfully" });
