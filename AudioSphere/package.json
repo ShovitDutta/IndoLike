@@ -3,7 +3,7 @@
   "name": "audiosphere",
   "version": "0.1.0",
   "scripts": {
-    "update:fix": "bun update --latest --force; bun add autoprefixer@^10.0.1 postcss@^8 tailwindcss@^3.3.0",
+    "update:fix": "yarn upgrade --latest --force; yarn add autoprefixer@^10.0.1 postcss@^8 tailwindcss@^3.3.0",
     "dev": "next dev --turbopack",
     "start": "next start",
     "build": "next build"
