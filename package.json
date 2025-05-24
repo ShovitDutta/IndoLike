@@ -3,7 +3,7 @@
   "scripts": {
     "clean": "rimraf AudioSphere/node_modules AudioSphere/.mext GeminiChat/node_modules GeminiChat/.mext QuoteGen/node_modules QuoteGen/.mext",
     "install": "yarn install --force --silent --cwd AudioSphere && yarn install --force --silent --cwd GeminiChat && yarn install --force --silent --cwd QuoteGen",
-    "update": "yarn run update:fix --cwd AudioSphere && yarn upgrade --latest --force --silent --cwd GeminiChat && yarn upgrade --latest --force --silent --cwd QuoteGen"
+    "update": "cd AudioSphere && yarn run update:fix && cd .. && yarn upgrade --latest --force --silent --cwd GeminiChat && yarn upgrade --latest --force --silent --cwd QuoteGen"
   },
   "dependencies": {
     "@octokit/rest": "^21.1.1",

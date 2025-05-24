@@ -36,11 +36,6 @@ interface CacheInfo {
 function ChatContent() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  useEffect(() => {
-    if (status === "loading") return;
-    if (!session) router.replace("/api/auth/signin");
-  }, [session, status, router]);
-  if (status === "loading" || !session) return <div>Loading...</div>;
   const [userInput, setUserInput] = useState("");
   const [response, setResponse] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -59,10 +54,17 @@ function ChatContent() {
   const [caches, setCaches] = useState<CacheInfo[]>([]);
   const [currentCache, setCurrentCache] = useState<CacheInfo | null>(null);
   const [cacheTTL, setCacheTTL] = useState("3600");
+
   useEffect(() => {
     const modelFromUrl = freeModels.find(model => model.id === selectedModelId);
     if (modelFromUrl) setCurrentModel(modelFromUrl);
   }, [selectedModelId]);
+
+  useEffect(() => {
+    if (status === "loading") return;
+    if (!session) router.replace("/api/auth/signin");
+  }, [session, status, router]);
+
   useEffect(() => {
     if (currentSessionId) {
       const fetchMessages = async () => {
@@ -83,34 +85,17 @@ function ChatContent() {
       fetchMessages();
     } else setResponse([]);
   }, [currentSessionId]);
+
+  const scrollToBottom = () => messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+
   useEffect(() => {
     scrollToBottom();
   }, [response]);
-  const scrollToBottom = () => messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  const handleUserInput = (e: React.ChangeEvent<HTMLInputElement>) => setUserInput(e.target.value);
-  const handleClear = () => {
-    setUserInput("");
-    setResponse([]);
-    setIsLoading(false);
-    setCurrentSessionId(null);
-  };
-  const handleSelectSession = (sessionId: string | null) => setCurrentSessionId(sessionId);
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-    const formData = new FormData();
-    formData.append("file", file);
-    try {
-      const res = await fetch("/api/chat/upload", { method: "POST", body: formData });
-      if (!res.ok) throw new Error("Upload failed");
-      const data = await res.json();
-      setUploadedFile(data);
-      setResponse(prev => [...prev, { id: Date.now().toString(), type: "system", content: `File uploaded: ${file.name}`, createdAt: new Date() }]);
-    } catch {
-      setResponse(prev => [...prev, { id: Date.now().toString(), type: "system", content: "Failed to upload file.", createdAt: new Date() }]);
-    }
-  };
-  const getFullSystemInstruction = (customInstruction: string) => customInstruction.trim();
+
+  useEffect(() => {
+    if (showSettings) fetchCaches();
+  }, [showSettings]);
+
   const handleSubmit = useCallback(async () => {
     if (!userInput.trim()) return;
     setIsLoading(true);
@@ -165,6 +150,33 @@ function ChatContent() {
       setIsLoading(false);
     }
   }, [userInput, currentSessionId, currentModel, customSystemInstruction, thinkingBudget, modelConfig, uploadedFile, currentCache]);
+
+  if (status === "loading" || !session) return <div>Loading...</div>;
+
+  const handleUserInput = (e: React.ChangeEvent<HTMLInputElement>) => setUserInput(e.target.value);
+  const handleClear = () => {
+    setUserInput("");
+    setResponse([]);
+    setIsLoading(false);
+    setCurrentSessionId(null);
+  };
+  const handleSelectSession = (sessionId: string | null) => setCurrentSessionId(sessionId);
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    const formData = new FormData();
+    formData.append("file", file);
+    try {
+      const res = await fetch("/api/chat/upload", { method: "POST", body: formData });
+      if (!res.ok) throw new Error("Upload failed");
+      const data = await res.json();
+      setUploadedFile(data);
+      setResponse(prev => [...prev, { id: Date.now().toString(), type: "system", content: `File uploaded: ${file.name}`, createdAt: new Date() }]);
+    } catch {
+      setResponse(prev => [...prev, { id: Date.now().toString(), type: "system", content: "Failed to upload file.", createdAt: new Date() }]);
+    }
+  };
+  const getFullSystemInstruction = (customInstruction: string) => customInstruction.trim();
   const handleModelChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newModelId = event.target.value;
     const newModel = freeModels.find(model => model.id === newModelId);
@@ -185,9 +197,6 @@ function ChatContent() {
       if (res.ok) setCaches(await res.json());
     } catch {}
   };
-  useEffect(() => {
-    if (showSettings) fetchCaches();
-  }, [showSettings]);
   const createCache = async () => {
     try {
       const res = await fetch("/api/chat/cache", {
