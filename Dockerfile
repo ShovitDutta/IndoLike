@@ -1,12 +1,13 @@
 FROM node:lts as builder
 WORKDIR /app
 COPY . .
-RUN npm i -g --force concurrently http-server
+RUN npm i -g concurrently http-server
 ENV DATABASE_URL="file:./local.db"
 RUN yarn install
 RUN yarn run together:build
 FROM node:lts
 WORKDIR /app
+ENV PATH="/opt/node/bin:$PATH"
 COPY --from=builder /app/QuoteGen ./QuoteGen
 COPY --from=builder /app/GeminiChat ./GeminiChat
 COPY --from=builder /app/AudioSphere ./AudioSphere
