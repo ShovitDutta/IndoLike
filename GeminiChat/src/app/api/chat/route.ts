@@ -1,29 +1,19 @@
 import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
 import { prisma } from "../../../../prisma/prisma";
-import { auth } from "../../../../auth";
-
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY as string });
 export async function POST(request: Request) {
   try {
-    const session = await auth();
-    const userApiKey = session?.user?.geminiApiKey || process.env.GEMINI_API_KEY;
-
-    if (!userApiKey) {
-      return NextResponse.json({ error: "Gemini API key not provided. Please add your API key in your profile settings." }, { status: 400 });
-    }
-
-    const ai = new GoogleGenAI({ apiKey: userApiKey as string });
-
     const { prompt, sessionId, model, systemInstruction, thinkingBudget, modelConfig } = await request.json();
     let currentSessionId = sessionId;
     let isNewSession = !currentSessionId;
-    let chatSession; // Renamed to avoid redeclaration
+    let session;
     if (isNewSession) {
-      chatSession = await prisma.chatSession.create({ data: { name: "New Chat" } });
-      currentSessionId = chatSession.id;
+      session = await prisma.chatSession.create({ data: { name: "New Chat" } });
+      currentSessionId = session.id;
     } else {
-      chatSession = await prisma.chatSession.findUnique({ where: { id: currentSessionId }, include: { messages: true } });
-      if (!chatSession) {
+      session = await prisma.chatSession.findUnique({ where: { id: currentSessionId }, include: { messages: true } });
+      if (!session) {
         return NextResponse.json({ error: "Chat session not found" }, { status: 404 });
       }
     }

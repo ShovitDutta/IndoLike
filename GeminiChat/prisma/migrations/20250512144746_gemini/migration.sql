@@ -48,8 +48,7 @@ CREATE TABLE "users" (
     "name" TEXT,
     "email" TEXT,
     "email_verified" DATETIME,
-    "image" TEXT,
-    "geminiApiKey" TEXT
+    "image" TEXT
 );
 
 -- CreateTable
