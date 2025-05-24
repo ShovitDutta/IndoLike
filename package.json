@@ -1,12 +1,19 @@
 {
   "type": "module",
   "scripts": {
+    "serve:main": "http-server . -p 3000",
+    "serve:quote": "http-server ./QuoteGen/dist -p 3003",
+    "serve:chat": "http-server ./GeminiChat/dist -p 3002",
+    "serve:audio": "http-server ./AudioSphere/dist -p 3001",
+    "start:all:dev": "concurrently \"npm run serve:main\" \"npm run serve:audio\" \"npm run serve:chat\" \"npm run serve:quote\"",
     "clean": "rimraf AudioSphere/node_modules AudioSphere/.mext GeminiChat/node_modules GeminiChat/.mext QuoteGen/node_modules QuoteGen/.mext",
     "install": "yarn install --force --silent --cwd AudioSphere && yarn install --force --silent --cwd GeminiChat && yarn install --force --silent --cwd QuoteGen",
     "update": "cd AudioSphere && yarn run update:fix && cd .. && yarn upgrade --latest --force --silent --cwd GeminiChat && yarn upgrade --latest --force --silent --cwd QuoteGen"
   },
   "dependencies": {
     "@octokit/rest": "^21.1.1",
-    "dotenv": "^16.5.0"
+    "concurrently": "^9.1.2",
+    "dotenv": "^16.5.0",
+    "http-server": "^14.1.1"
   }
 }
