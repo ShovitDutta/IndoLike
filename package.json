@@ -9,8 +9,11 @@
     "update": "cd AudioSphere && yarn run update:fix && cd .. && yarn upgrade --latest --force --silent --cwd GeminiChat && yarn upgrade --latest --force --silent --cwd QuoteGen"
   },
   "dependencies": {
+    "@ngrok/ngrok": "^1.5.1",
     "@octokit/rest": "^21.1.1",
     "concurrently": "^9.1.2",
-    "dotenv": "^16.5.0"
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "http-proxy-middleware": "^3.0.5"
   }
 }
