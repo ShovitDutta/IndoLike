@@ -10,6 +10,7 @@
     "**/.next": true,
     "**/dist": false,
     "**/.venv": true,
+    "**/.turbo": true,
     "**/build": false,
     "**/android": true,
     "**/bun.lock": true,
@@ -18,6 +19,6 @@
     "**/yarn.lock": true,
     "**/pnpm.lock": true,
     "**/node_modules": true,
-    "**/package-json.lock": true
+    "**/package-lock.json": true
   }
 }

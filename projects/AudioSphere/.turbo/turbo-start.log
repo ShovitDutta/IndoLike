@@ -1,0 +1,8 @@
+yarn run v1.22.22
+$ next start -p 3001
+   ▲ Next.js 15.3.2
+   - Local:        http://localhost:3001
+   - Network:      http://192.168.1.34:3001
+
+ ✓ Starting...
+ ✓ Ready in 515ms
