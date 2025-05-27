@@ -18,7 +18,6 @@ RUN curl -o- https://fnm.vercel.app/install | bash && \
     eval "$(fnm env)" && \
     fnm install 22 && \
     fnm use 22
-RUN apt install -y nodejs npm
 ENV PATH="/root/.local/share/fnm:$PATH"
 RUN npm install -g yarn
 COPY package.json .
