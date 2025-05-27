@@ -2,8 +2,8 @@
   "name": "quotegen",
   "packageManager": ">=npm@11.4.1",
   "scripts": {
-    "dev": "next dev --turbopack -p 3003",
-    "start": "next start -p 3003",
+    "dev": "next dev --turbopack -p 4003",
+    "start": "next start -p 4003",
     "build": "next build"
   },
   "dependencies": {

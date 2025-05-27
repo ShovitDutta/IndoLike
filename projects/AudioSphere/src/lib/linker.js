@@ -1,1 +1,1 @@
-export const BASE_URL = process.env.NODE_ENV === "development" ? "http://localhost:3001/" : "https://server-example.com/";
+export const BASE_URL = process.env.NODE_ENV === "development" ? process.env.AUDIOSPHERE_DEV_URL : "https://server-example.com/";

@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || "http://localhost";
-const projport = { AudioSphere: 3001, GeminiChat: 3002, QuoteGen: 3003 };
+const projport = { AudioSphere: 4001, GeminiChat: 4002, QuoteGen: 4003 };
 
 const server = express();
 server.set("view engine", "ejs");
