@@ -36,8 +36,6 @@ RUN yarn install
 RUN hash -r
 RUN yarn build
 RUN hash -r
-RUN cp /etc/tor/torrc/torrc /etc/tor/torrc.bak && grep -q "SocksPort 9050" /etc/tor/torrc || echo "SocksPort 9050" >> /etc/tor/torrc
-RUN hash -r
 EXPOSE 9050 9051
 EXPOSE 3001 3002 3003
 CMD ["yarn", "start"]
