@@ -24,9 +24,9 @@ COPY AudioSphere AudioSphere/
 COPY GeminiChat GeminiChat/
 COPY QuoteGen QuoteGen/
 RUN yarn install
-RUN yarn together:build
+RUN yarn build
 RUN cp /etc/tor/torrc/torrc /etc/tor/torrc.bak && \
     grep -q "SocksPort 9050" /etc/tor/torrc || echo "SocksPort 9050" >> /etc/tor/torrc
-EXPOSE 9050
+EXPOSE 9050 9051
 EXPOSE 3001 3002 3003
-CMD service tor start && yarn together:start
+CMD ["yarn", "build"]
