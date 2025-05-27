@@ -6,6 +6,7 @@ RUN apt update && \
     wget \
     unzip \
     curl \
+    tar \
     tor \
     python3 \
     python3-pip \
@@ -13,13 +14,16 @@ RUN apt update && \
     apt autoremove -y && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
-RUN curl -o- https://fnm.vercel.app/install | bash && \
-    export PATH="/root/.local/share/fnm:$PATH" && \
-    eval "$(fnm env)" && \
-    fnm install 22 && \
-    fnm use 22
-ENV PATH="/root/.local/share/fnm:$PATH"
+
+# Install Node.js and npm directly using curl and tar
+# Choose your desired Node.js LTS version (e.g., 20 or 22)
+ENV NODE_VERSION=node-v20.14.0 # Or node-v22.2.0 if you prefer 22
+ENV NODE_ARCH=linux-x64
+RUN curl -sL "https://nodejs.org/dist/${NODE_VERSION}/${NODE_VERSION}-${NODE_ARCH}.tar.xz" | tar -xJf - -C /usr/local --strip-components=1
+ENV PATH="/usr/local/bin:$PATH"
+
 RUN npm install -g yarn
+
 COPY package.json .
 COPY AudioSphere AudioSphere/
 COPY GeminiChat GeminiChat/
