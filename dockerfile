@@ -29,4 +29,4 @@ RUN cp /etc/tor/torrc/torrc /etc/tor/torrc.bak && \
     grep -q "SocksPort 9050" /etc/tor/torrc || echo "SocksPort 9050" >> /etc/tor/torrc
 EXPOSE 9050 9051
 EXPOSE 3001 3002 3003
-CMD ["yarn", "build"]
+CMD ["yarn", "start"]
