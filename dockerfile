@@ -18,10 +18,7 @@ RUN apt update && \
 RUN npm install -g n && n install 24
 ENV PATH="/usr/local/bin:$PATH"
 RUN npm install -g yarn
-COPY package.json .
-COPY AudioSphere AudioSphere/
-COPY GeminiChat GeminiChat/
-COPY QuoteGen QuoteGen/
+COPY . /app
 ENV DATABASE_URL="file:./local.db"
 RUN yarn install
 RUN yarn build
