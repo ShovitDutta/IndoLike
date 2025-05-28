@@ -1,7 +1,0 @@
-yarn run v1.22.22
-warning package.json: No license field
-$ next build
-'next' is not recognized as an internal or external command,
-operable program or batch file.
-error Command failed with exit code 1.
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
