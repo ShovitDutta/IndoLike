@@ -17,11 +17,10 @@ RUN apt update && \
     rm -rf /var/lib/apt/lists/*
 RUN npm install -g n && n install 24
 ENV PATH="/usr/local/bin:$PATH"
-RUN npm install -g yarn
 COPY . /app
 ENV DATABASE_URL="file:./local.db"
-RUN yarn install
-RUN yarn build
+RUN npm run install
+RUN npm run build
 EXPOSE 9050 9051
 EXPOSE 3001 3002 3003
-CMD ["yarn", "start"]
+CMD ["npm", "run", "start"]
