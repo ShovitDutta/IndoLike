@@ -19,7 +19,7 @@ RUN npm install -g n && n install 24
 ENV PATH="/usr/local/bin:$PATH"
 COPY . /app
 ENV DATABASE_URL="file:./local.db"
-RUN npm run install
+RUN npm install
 RUN npm run build
 EXPOSE 9050 9051
 EXPOSE 3001 3002 3003
